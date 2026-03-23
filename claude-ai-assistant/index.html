@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude로 나만의 AI 비서 시스템 만들기</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --canvas: #F8F5ED;
+    --ink: #12141A;
+    --ember: #D4572A;
+    --cinnabar: #AA3830;
+    --slate: #3C4553;
+    --stone: #8A857D;
+    --code-bg: #1e1e2e;
+    --code-text: #cdd6f4;
+    --accent-blue: #89b4fa;
+    --accent-green: #a6e3a1;
+    --accent-yellow: #f9e2af;
+    --accent-red: #f38ba8;
+    --card-bg: #FFFFFF;
+    --border: #E5E0D8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', -apple-system, sans-serif;
+    background: var(--canvas);
+    color: var(--ink);
+    line-height: 1.75;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, var(--ink) 0%, var(--slate) 100%);
+    color: var(--canvas);
+    padding: 80px 24px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(212,87,42,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 70% 80%, rgba(137,180,250,0.1) 0%, transparent 50%);
+    animation: float 20s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-2%, 2%); }
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(212,87,42,0.2);
+    border: 1px solid rgba(212,87,42,0.4);
+    color: #f0a080;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+    letter-spacing: 0.5px;
+  }
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    letter-spacing: -1px;
+  }
+  .hero h1 span { color: var(--ember); }
+  .hero p {
+    font-size: 18px;
+    font-weight: 300;
+    opacity: 0.8;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  /* Container */
+  .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+
+  /* Nav */
+  .toc {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    margin: -30px auto 48px;
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  }
+  .toc h2 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--stone);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 16px;
+  }
+  .toc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .toc a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .toc a:hover { background: var(--canvas); color: var(--ember); }
+  .toc a .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: var(--canvas);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--stone);
+    flex-shrink: 0;
+  }
+
+  /* Comparison */
+  .comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 32px 0;
+  }
+  .compare-card {
+    background: var(--card-bg);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    transition: all 0.3s;
+  }
+  .compare-card.recommended {
+    border-color: var(--ember);
+    box-shadow: 0 4px 20px rgba(212,87,42,0.12);
+  }
+  .compare-card .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .compare-card.recommended .badge {
+    background: rgba(212,87,42,0.1);
+    color: var(--ember);
+  }
+  .compare-card:not(.recommended) .badge {
+    background: rgba(60,69,83,0.1);
+    color: var(--slate);
+  }
+  .compare-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .compare-card .subtitle { font-size: 14px; color: var(--stone); margin-bottom: 16px; }
+  .compare-card ul { list-style: none; }
+  .compare-card li {
+    padding: 6px 0;
+    font-size: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .compare-card li::before {
+    content: '✓';
+    color: var(--accent-green);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* Section */
+  section { margin: 64px 0; }
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ember);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+  }
+  .section-label .line {
+    width: 32px;
+    height: 2px;
+    background: var(--ember);
+    border-radius: 1px;
+  }
+  h2.section-title {
+    font-size: clamp(28px, 4vw, 36px);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .section-desc {
+    font-size: 17px;
+    color: var(--stone);
+    margin-bottom: 32px;
+    font-weight: 300;
+  }
+
+  /* Steps */
+  .step {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    margin: 20px 0;
+    position: relative;
+  }
+  .step-number {
+    position: absolute;
+    top: -14px;
+    left: 24px;
+    background: var(--ember);
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .step h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .step p, .step li {
+    font-size: 15px;
+    color: var(--slate);
+  }
+  .step ul, .step ol {
+    margin: 12px 0;
+    padding-left: 20px;
+  }
+  .step li { margin: 8px 0; }
+
+  /* Code */
+  pre {
+    background: var(--code-bg);
+    border-radius: 12px;
+    padding: 20px 24px;
+    overflow-x: auto;
+    margin: 16px 0;
+    position: relative;
+  }
+  pre code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--code-text);
+  }
+  code:not(pre code) {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    background: rgba(60,69,83,0.08);
+    padding: 2px 7px;
+    border-radius: 5px;
+    color: var(--ember);
+  }
+  .code-label {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: rgba(205,214,244,0.4);
+    text-transform: uppercase;
+  }
+
+  /* Callout */
+  .callout {
+    border-left: 4px solid;
+    border-radius: 0 12px 12px 0;
+    padding: 20px 24px;
+    margin: 24px 0;
+    font-size: 15px;
+  }
+  .callout.warning {
+    background: rgba(249,226,175,0.15);
+    border-color: #e6a700;
+  }
+  .callout.warning .callout-title { color: #b58900; }
+  .callout.info {
+    background: rgba(137,180,250,0.1);
+    border-color: var(--accent-blue);
+  }
+  .callout.info .callout-title { color: #4080d0; }
+  .callout.tip {
+    background: rgba(166,227,161,0.1);
+    border-color: var(--accent-green);
+  }
+  .callout.tip .callout-title { color: #40a040; }
+  .callout.danger {
+    background: rgba(243,139,168,0.1);
+    border-color: var(--accent-red);
+  }
+  .callout.danger .callout-title { color: var(--cinnabar); }
+  .callout-title {
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Table */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 20px 0;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  th {
+    background: var(--slate);
+    color: var(--canvas);
+    font-weight: 600;
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 13px;
+    letter-spacing: 0.3px;
+  }
+  td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: rgba(248,245,237,0.5); }
+
+  /* Checklist */
+  .checklist {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin: 24px 0;
+  }
+  .checklist h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 8px 0;
+    font-size: 14px;
+    color: var(--slate);
+  }
+  .check-box {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border);
+    border-radius: 5px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* Troubleshoot */
+  .trouble-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin: 12px 0;
+    overflow: hidden;
+  }
+  .trouble-q {
+    padding: 16px 20px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .trouble-q::before {
+    content: 'Q';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: var(--cinnabar);
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .trouble-a {
+    padding: 0 20px 16px 54px;
+    font-size: 14px;
+    color: var(--slate);
+  }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+    margin: 64px 0;
+  }
+
+  /* Summary */
+  .summary-box {
+    background: linear-gradient(135deg, var(--ink) 0%, var(--slate) 100%);
+    color: var(--canvas);
+    border-radius: 20px;
+    padding: 40px;
+    margin: 48px 0;
+    text-align: center;
+  }
+  .summary-box h2 {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .summary-box p {
+    font-size: 16px;
+    opacity: 0.7;
+    margin-bottom: 28px;
+  }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    text-align: left;
+  }
+  .summary-item {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .summary-item h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--accent-yellow);
+  }
+  .summary-item p { font-size: 14px; opacity: 0.8; margin: 0; }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--stone);
+    font-size: 13px;
+  }
+  footer a { color: var(--ember); text-decoration: none; }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .toc-grid { grid-template-columns: 1fr; }
+    .comparison { grid-template-columns: 1fr; }
+    .summary-grid { grid-template-columns: 1fr; }
+    .hero { padding: 60px 20px 50px; }
+    .step { padding: 24px 20px; }
+  }
+
+  /* Markdown-in-code highlight */
+  .kw { color: #cba6f7; }
+  .str { color: #a6e3a1; }
+  .cmt { color: #6c7086; }
+  .fn { color: #89b4fa; }
+  .op { color: #f38ba8; }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">2026 Guide</div>
+    <h1>Claude로 나만의<br><span>AI 비서 시스템</span> 만들기</h1>
+    <p>역할별 AI 비서를 세팅하는 2가지 방법.<br>비개발자도 따라할 수 있는 완전 가이드.</p>
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="container">
+<div class="toc">
+  <h2>목차</h2>
+  <div class="toc-grid">
+    <a href="#compare"><span class="num">0</span> 어떤 방법을 골라야 할까?</a>
+    <a href="#dispatch"><span class="num">1</span> Cowork Dispatch (초간단)</a>
+    <a href="#discord"><span class="num">2</span> Discord 채널 라우팅 (고급)</a>
+    <a href="#advanced"><span class="num">3</span> 고급 팁</a>
+    <a href="#troubleshoot"><span class="num">4</span> 트러블슈팅</a>
+    <a href="#checklist"><span class="num">5</span> 체크리스트</a>
+  </div>
+</div>
+</div>
+
+<div class="container">
+
+<!-- ====== COMPARISON ====== -->
+<section id="compare">
+  <div class="section-label"><span class="line"></span> CHOOSE YOUR PATH</div>
+  <h2 class="section-title">어떤 방법을 골라야 할까?</h2>
+  <p class="section-desc">두 가지 방법은 서로 보완적입니다. 혼자 쓸 거면 Dispatch, 팀이 있으면 Discord.</p>
+
+  <div class="comparison">
+    <div class="compare-card recommended">
+      <span class="badge">추천 — 초보자</span>
+      <h3>Cowork Dispatch</h3>
+      <p class="subtitle">폰 → 맥, 문자 보내듯이</p>
+      <ul>
+        <li>셋업 2분 (QR 스캔)</li>
+        <li>폰에서 어디서든 태스크 전송</li>
+        <li>별도 인프라 불필요</li>
+        <li>Pro/Max 구독만 있으면 OK</li>
+      </ul>
+    </div>
+    <div class="compare-card">
+      <span class="badge">고급</span>
+      <h3>Discord 채널 라우팅</h3>
+      <p class="subtitle">봇 1개, 채널마다 다른 역할</p>
+      <ul>
+        <li>채널 = 역할 자동 전환</li>
+        <li>팀원과 공유 가능</li>
+        <li>tmux로 24/7 온라인</li>
+        <li>Discord 봇 셋업 필요 (30분)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <tr>
+        <th></th>
+        <th>Cowork Dispatch</th>
+        <th>Discord 채널 라우팅</th>
+      </tr>
+      <tr><td><strong>난이도</strong></td><td>⭐ 쉬움 (2분)</td><td>⭐⭐⭐ 보통 (30분)</td></tr>
+      <tr><td><strong>필요한 것</strong></td><td>Pro/Max 구독 + 폰</td><td>Claude Code + Discord</td></tr>
+      <tr><td><strong>역할 전환</strong></td><td>메시지에 역할 명시</td><td>채널 이름 자동 감지</td></tr>
+      <tr><td><strong>장점</strong></td><td>세팅 없음, 폰 어디서든</td><td>팀 공유, 상시 온라인</td></tr>
+      <tr><td><strong>단점</strong></td><td>맥 ON 필수, 프리뷰</td><td>봇 셋업 필요</td></tr>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ====== DISPATCH ====== -->
+<section id="dispatch">
+  <div class="section-label"><span class="line"></span> 방법 1</div>
+  <h2 class="section-title">Cowork Dispatch</h2>
+  <p class="section-desc">2026년 3월 17일 출시. 폰에서 문자 보내듯이 Claude에게 일을 시키면, 내 맥에서 알아서 처리합니다.</p>
+
+  <div class="callout info">
+    <div class="callout-title">💡 한마디로</div>
+    폰 = 리모컨, 맥 = 일꾼. 파일, 플러그인, 커넥터 전부 맥에서 로컬로 실행됩니다.
+  </div>
+
+  <div class="step">
+    <div class="step-number">1</div>
+    <h3>앱 준비</h3>
+    <ul>
+      <li>Claude <strong>Pro</strong> ($20/월) 또는 <strong>Max</strong> ($100/월) 구독</li>
+      <li><strong>Claude Desktop 앱</strong> 최신 버전 (macOS / Windows)</li>
+      <li><strong>Claude 모바일 앱</strong> 최신 버전 (iOS / Android)</li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <div class="step-number">2</div>
+    <h3>Dispatch 연결 (2분)</h3>
+    <ol>
+      <li>맥 또는 폰의 Claude 앱에서 왼쪽 패널의 <strong>Dispatch</strong> 클릭</li>
+      <li><strong>Get started</strong> 선택</li>
+      <li>파일 접근 권한, 화면 꺼짐 방지 설정 확인</li>
+      <li><strong>Finish setup</strong> 클릭</li>
+    </ol>
+    <p style="margin-top:12px;">끝. QR 코드 스캔하면 연결됩니다.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-number">3</div>
+    <h3>써보기</h3>
+    <p>폰에서 메시지 보내보세요:</p>
+    <pre><code>Downloads 폴더에 있는 PDF들 내용 요약해서 정리해줘</code></pre>
+    <p>맥이 알아서 PDF 읽고 → 정리하고 → 결과를 보여줍니다.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-number">4</div>
+    <h3>역할별로 쓰는 법</h3>
+    <p>Dispatch에는 채널이 없으니까, <strong>메시지에 역할을 명시</strong>하면 됩니다:</p>
+    <pre><code><span class="kw">[마케팅]</span> 이번 주 인스타 캡션 3개 초안 써줘
+
+<span class="kw">[개발]</span> 이 에러 로그 분석해줘. ~/logs/error.log 파일 봐봐
+
+<span class="kw">[리서치]</span> 한국 이커머스 시장 최근 트렌드 정리해줘</code></pre>
+  </div>
+
+  <div class="step">
+    <div class="step-number">5</div>
+    <h3>더 체계적으로: CLAUDE.md</h3>
+    <p>프로젝트 폴더에 <code>CLAUDE.md</code>를 만들어놓으면, Dispatch에서도 그 규칙을 따릅니다:</p>
+    <pre><code><span class="cmt"># 내 AI 비서 규칙</span>
+
+<span class="cmt">## 기본 행동</span>
+<span class="str">- 한국어로 응답</span>
+<span class="str">- 간결하게, 불필요한 서론 없이</span>
+<span class="str">- 결과물은 ~/Documents/outputs/ 에 저장</span>
+
+<span class="cmt">## [마케팅] 모드</span>
+<span class="str">- SNS 트렌드 반영</span>
+<span class="str">- 타겟 오디언스 고려</span>
+
+<span class="cmt">## [개발] 모드</span>
+<span class="str">- 코드 예시 포함</span>
+<span class="str">- 보안/성능 고려</span>
+
+<span class="cmt">## [리서치] 모드</span>
+<span class="str">- 출처 명시</span>
+<span class="str">- 데이터 기반</span></code></pre>
+  </div>
+
+  <div class="callout warning">
+    <div class="callout-title">⚠️ Dispatch 주의사항</div>
+    <ol style="margin:8px 0 0 16px; font-size:14px;">
+      <li><strong>맥이 켜져 있어야 합니다.</strong> 잠자기 모드면 멈춤.</li>
+      <li><strong>리서치 프리뷰 단계.</strong> 복잡한 건 50:50. 간단한 것부터.</li>
+      <li><strong>대화 스레드 1개.</strong> 병렬 태스크 불가.</li>
+      <li><strong>완료 알림 없음.</strong> 직접 확인 필요.</li>
+      <li><strong>보안 주의.</strong> 파일 삭제/이동도 실행 가능. 권한 설정 꼼꼼히.</li>
+    </ol>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ====== DISCORD ====== -->
+<section id="discord">
+  <div class="section-label"><span class="line"></span> 방법 2</div>
+  <h2 class="section-title">Discord 채널 라우팅</h2>
+  <p class="section-desc">봇 1개를 Discord 서버에 연결하고, 채널 이름에 따라 자동으로 역할이 바뀌는 시스템.</p>
+
+  <pre><code><span class="cmt">Discord 서버</span>
+<span class="str">├── #마케팅</span>  →  마케팅 전문가로 응답
+<span class="str">├── #개발</span>    →  시니어 개발자로 응답
+<span class="str">├── #리서치</span>  →  리서처로 응답
+<span class="str">└── #일반</span>    →  범용 어시스턴트</code></pre>
+
+  <div class="callout danger">
+    <div class="callout-title">🚫 왜 봇 1개인가? (삽질 방지)</div>
+    <p>"채널마다 봇을 따로 만들면?" → <strong>안 됩니다.</strong></p>
+    <p style="margin-top:8px;">Discord 플러그인은 토큰을 <code>~/.claude/channels/discord/.env</code> 하나에 저장합니다. 여러 봇을 띄워도 마지막 봇만 온라인. HOME 분리, 순차 실행, 심링크 등 전부 실패합니다.</p>
+    <p style="margin-top:8px;font-weight:600;">봇 1개 + CLAUDE.md 채널 라우팅 = 유일한 해결책.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-number">1</div>
+    <h3>Discord 봇 만들기 (5분)</h3>
+    <ol>
+      <li><a href="https://discord.com/developers/applications" target="_blank" style="color:var(--ember);">discord.com/developers/applications</a> 접속</li>
+      <li><strong>New Application</strong> → 이름 입력</li>
+      <li>Bot 탭 → <strong>Reset Token</strong> → 토큰 복사 (비밀번호 취급!)</li>
+      <li><strong>Privileged Gateway Intents</strong> 3개 전부 ON:</li>
+    </ol>
+    <pre><code><span class="str">✅ Presence Intent</span>
+<span class="str">✅ Server Members Intent</span>
+<span class="str">✅ Message Content Intent</span>    <span class="cmt">← 이거 까먹으면 봇이 메시지를 못 읽음!</span></code></pre>
+    <ol start="5">
+      <li><strong>OAuth2</strong> → URL Generator → Scopes: <code>bot</code> → Permissions: Send Messages, Read Message History, View Channels</li>
+      <li>생성된 URL로 서버에 초대</li>
+    </ol>
+  </div>
+
+  <div class="step">
+    <div class="step-number">2</div>
+    <h3>CLAUDE.md 작성 (10분) — 핵심!</h3>
+    <p>이 파일이 봇의 두뇌입니다. 템플릿을 복사해서 수정하세요:</p>
+    <pre><code><span class="cmt"># 내 Discord AI 비서</span>
+<span class="cmt">> 채널 이름에 따라 역할이 전환된다.</span>
+
+<span class="cmt">## 채널 라우팅</span>
+
+| 채널       | 역할              | 설명                     |
+|-----------|-------------------|--------------------------|
+| <span class="kw">#마케팅</span>   | 마케팅 전문가       | 콘텐츠 전략, SNS, 카피     |
+| <span class="kw">#개발</span>     | 시니어 개발자       | 코드 리뷰, 아키텍처        |
+| <span class="kw">#리서치</span>   | 리서치 어시스턴트   | 시장 조사, 데이터 분석      |
+| <span class="kw">#일반</span>     | 범용 어시스턴트     | 기본 모드                  |
+
+<span class="cmt">---</span>
+<span class="cmt">## 📢 #마케팅</span>
+너는 마케팅 전문가다.
+<span class="str">- SNS 트렌드 반영</span>
+<span class="str">- 타겟 오디언스 고려</span>
+<span class="str">- 구체적 액션 아이템</span>
+
+<span class="cmt">## 💻 #개발</span>
+너는 시니어 풀스택 개발자다.
+<span class="str">- 코드 예시 포함</span>
+<span class="str">- 보안/성능 고려</span>
+
+<span class="cmt">## 🔍 #리서치</span>
+너는 리서치 어시스턴트다.
+<span class="str">- 출처 명시</span>
+<span class="str">- 데이터 기반 분석</span></code></pre>
+  </div>
+
+  <div class="step">
+    <div class="step-number">3</div>
+    <h3>토큰 등록 + 실행 (2분)</h3>
+    <pre><code><span class="cmt"># 프로젝트 폴더로 이동</span>
+<span class="fn">cd</span> ~/my-discord-bot
+
+<span class="cmt"># Claude Code 실행 후 토큰 등록</span>
+<span class="fn">claude</span>
+<span class="op">/discord:configure</span> 여기에_토큰_붙여넣기
+
+<span class="cmt"># 채널 모드 실행</span>
+<span class="fn">claude</span> <span class="str">--channels</span> plugin:discord@claude-plugins-official</code></pre>
+    <p><code>Listening...</code> 뜨면 성공!</p>
+  </div>
+
+  <div class="step">
+    <div class="step-number">4</div>
+    <h3>페어링 (1분)</h3>
+    <ol>
+      <li>Discord에서 봇에게 <strong>DM</strong> 보내기</li>
+      <li>봇이 <strong>6자리 코드</strong> 줌</li>
+      <li>Claude Code 터미널에서:</li>
+    </ol>
+    <pre><code><span class="op">/discord:access pair</span> 123456</code></pre>
+  </div>
+
+  <div class="step">
+    <div class="step-number">5</div>
+    <h3>채널 만들고 테스트</h3>
+    <p>Discord 서버에 CLAUDE.md에 쓴 채널들 생성 → 봇에게 말 걸기. 끝!</p>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-title">💡 백그라운드 실행 (tmux)</div>
+    <p>터미널 닫아도 봇이 계속 돌게 하려면:</p>
+    <pre style="margin-top:8px;"><code><span class="cmt">#!/bin/bash — start.sh</span>
+BASE=<span class="str">"$HOME/my-discord-bot"</span>
+
+tmux kill-session -t mybot 2>/dev/null
+pkill -f <span class="str">"claude --channels"</span> 2>/dev/null
+sleep 2
+
+tmux new-session -d -s mybot \
+  <span class="str">"cd '$BASE' && claude --channels plugin:discord@claude-plugins-official"</span>
+
+<span class="fn">echo</span> <span class="str">"✅ 실행 완료"</span>
+<span class="fn">echo</span> <span class="str">"접속: tmux attach -t mybot"</span>
+<span class="fn">echo</span> <span class="str">"종료: tmux kill-session -t mybot"</span></code></pre>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ====== ADVANCED ====== -->
+<section id="advanced">
+  <div class="section-label"><span class="line"></span> 고급 팁</div>
+  <h2 class="section-title">두 방법 모두에 적용</h2>
+
+  <div class="step">
+    <h3>📁 데이터 폴더 연결</h3>
+    <p>CLAUDE.md에서 특정 폴더를 참조하게 할 수 있습니다:</p>
+    <pre><code><span class="cmt">## 📢 #마케팅</span>
+<span class="cmt">### 데이터</span>
+<span class="str">- ~/my-bot/data/마케팅/캠페인/</span>  ← 진행 중인 캠페인
+<span class="str">- ~/my-bot/data/마케팅/레퍼런스/</span> ← 벤치마크 자료</code></pre>
+    <p>해당 채널에서 질문하면 폴더 내 파일을 참조해서 답변합니다.</p>
+  </div>
+
+  <div class="step">
+    <h3>👤 공유 프로필</h3>
+    <p>여러 역할에서 공통으로 쓸 정보는 별도 파일로:</p>
+    <pre><code><span class="cmt">my-bot/</span>
+├── CLAUDE.md
+└── shared/
+    └── company-profile.md   <span class="cmt">← 회사 정보, 브랜드 가이드</span></code></pre>
+    <p>CLAUDE.md에서 <code>shared/company-profile.md 참조</code>라고 쓰면 됩니다.</p>
+  </div>
+
+  <div class="step">
+    <h3>➕ 채널/역할 추가</h3>
+    <p>새 역할 추가 = <strong>딱 2가지</strong>:</p>
+    <ol>
+      <li>Discord에 채널 생성 (또는 Dispatch면 새 태그 정하기)</li>
+      <li>CLAUDE.md에 라우팅 테이블 + 섹션 추가</li>
+    </ol>
+    <p>봇 재시작하면 바로 적용.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ====== TROUBLESHOOT ====== -->
+<section id="troubleshoot">
+  <div class="section-label"><span class="line"></span> TROUBLESHOOTING</div>
+  <h2 class="section-title">트러블슈팅 (Discord)</h2>
+
+  <div class="trouble-item">
+    <div class="trouble-q">봇이 Discord에서 오프라인이에요</div>
+    <div class="trouble-a">
+      <p><strong>90%는 토큰 문제.</strong> 직접 테스트:</p>
+      <pre><code><span class="fn">cd</span> ~/.claude/plugins/cache/claude-plugins-official/discord/0.0.1
+<span class="fn">bun</span> run start</code></pre>
+      <p><code>gateway connected</code> → 정상 | <code>TokenInvalid</code> → 토큰 재발급</p>
+    </div>
+  </div>
+
+  <div class="trouble-item">
+    <div class="trouble-q">봇이 메시지를 못 읽어요</div>
+    <div class="trouble-a">
+      Developer Portal → Bot 탭 → <strong>Message Content Intent</strong> 켜져 있는지 확인. 가장 자주 까먹는 부분입니다.
+    </div>
+  </div>
+
+  <div class="trouble-item">
+    <div class="trouble-q">"Channels are not currently available" 에러</div>
+    <div class="trouble-a">
+      Claude Code 업데이트: <code>claude update</code>
+    </div>
+  </div>
+
+  <div class="trouble-item">
+    <div class="trouble-q">좀비 프로세스가 남아요</div>
+    <div class="trouble-a">
+      <pre><code>pkill -9 -f <span class="str">"claude --channels"</span>
+pkill -9 bun</code></pre>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ====== CHECKLIST ====== -->
+<section id="checklist">
+  <div class="section-label"><span class="line"></span> CHECKLIST</div>
+  <h2 class="section-title">체크리스트</h2>
+
+  <div class="checklist">
+    <h3>📱 Dispatch</h3>
+    <div class="check-item"><div class="check-box"></div> Claude Pro 또는 Max 구독 중</div>
+    <div class="check-item"><div class="check-box"></div> Claude Desktop 앱 최신 버전 설치</div>
+    <div class="check-item"><div class="check-box"></div> Claude 모바일 앱 최신 버전 설치</div>
+    <div class="check-item"><div class="check-box"></div> Cowork에서 Dispatch 연결 (QR 스캔)</div>
+    <div class="check-item"><div class="check-box"></div> 폰에서 테스트 메시지 보내기</div>
+    <div class="check-item"><div class="check-box"></div> (선택) 프로젝트 폴더에 CLAUDE.md 작성</div>
+  </div>
+
+  <div class="checklist">
+    <h3>🤖 Discord</h3>
+    <div class="check-item"><div class="check-box"></div> Developer Portal에서 봇 생성</div>
+    <div class="check-item"><div class="check-box"></div> Intent 3개 전부 ON</div>
+    <div class="check-item"><div class="check-box"></div> 봇을 서버에 초대</div>
+    <div class="check-item"><div class="check-box"></div> 프로젝트 폴더에 CLAUDE.md 작성</div>
+    <div class="check-item"><div class="check-box"></div> <code>claude</code> → <code>/discord:configure 토큰</code></div>
+    <div class="check-item"><div class="check-box"></div> <code>claude --channels plugin:discord@...</code> 실행</div>
+    <div class="check-item"><div class="check-box"></div> DM으로 페어링 (6자리 코드)</div>
+    <div class="check-item"><div class="check-box"></div> 서버에 채널 생성 (CLAUDE.md와 이름 일치)</div>
+    <div class="check-item"><div class="check-box"></div> 채널에서 테스트</div>
+  </div>
+</section>
+
+<!-- Summary -->
+<div class="summary-box">
+  <h2>한줄 요약</h2>
+  <p>핵심은 둘 다 CLAUDE.md 하나. 역할과 규칙을 잘 써놓으면 끝.</p>
+  <div class="summary-grid">
+    <div class="summary-item">
+      <h4>📱 Dispatch</h4>
+      <p>폰에서 문자 보내듯이 → 맥이 알아서 처리.<br><strong>2분 셋업.</strong></p>
+    </div>
+    <div class="summary-item">
+      <h4>🤖 Discord 채널</h4>
+      <p>봇 1개 + CLAUDE.md = 채널마다 다른 역할.<br><strong>팀과 공유 가능.</strong></p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<footer>
+  <p>Built with Claude · 2026</p>
+</footer>
+
+</body>
+</html>
