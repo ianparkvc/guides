@@ -22,31 +22,9 @@ body{font-family:'Pretendard Variable','Inter',sans-serif;background:var(--ink);
 ::selection{background:var(--ember);color:var(--canvas)}
 
 /* ===== HERO ===== */
-.hero{min-height:100vh;background:rgba(45,45,63,.85);position:relative;z-index:1;backdrop-filter:blur(30px);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;
+.hero{min-height:100vh;background:#2D2D3F;position:relative;z-index:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;
   background-image:var(--gradient-hero)}
 .hero::before{content:'';position:absolute;inset:0;pointer-events:none}
-/* dreamy blur overlays — STRONG */
-.blur-orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0}
-.blur-orb.o1{width:450px;height:450px;background:radial-gradient(circle,rgba(255,111,97,.5) 0%,rgba(255,111,97,0) 70%);top:0%;left:-8%;animation:orbDrift1 18s ease-in-out infinite}
-.blur-orb.o2{width:400px;height:400px;background:radial-gradient(circle,rgba(255,179,193,.45) 0%,rgba(255,179,193,0) 70%);top:25%;right:-8%;animation:orbDrift2 22s ease-in-out infinite}
-.blur-orb.o3{width:500px;height:500px;background:radial-gradient(circle,rgba(168,216,185,.4) 0%,rgba(168,216,185,0) 70%);top:50%;left:5%;animation:orbDrift3 20s ease-in-out infinite}
-.blur-orb.o4{width:380px;height:380px;background:radial-gradient(circle,rgba(242,201,76,.45) 0%,rgba(242,201,76,0) 70%);top:70%;right:0%;animation:orbDrift4 25s ease-in-out infinite}
-.blur-orb.o5{width:350px;height:350px;background:radial-gradient(circle,rgba(255,111,97,.35) 0%,rgba(255,111,97,0) 70%);top:40%;left:40%;animation:orbDrift5 28s ease-in-out infinite}
-.blur-orb.o6{width:300px;height:300px;background:radial-gradient(circle,rgba(255,179,193,.4) 0%,rgba(255,179,193,0) 70%);top:15%;left:50%;animation:orbDrift6 24s ease-in-out infinite}
-@media(min-width:768px){
-  .blur-orb.o1{width:800px;height:800px}
-  .blur-orb.o2{width:700px;height:700px}
-  .blur-orb.o3{width:900px;height:900px}
-  .blur-orb.o4{width:650px;height:650px}
-  .blur-orb.o5{width:600px;height:600px}
-  .blur-orb.o6{width:500px;height:500px}
-}
-@keyframes orbDrift1{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(60px,40px) scale(1.1)}66%{transform:translate(-30px,-20px) scale(.9)}}
-@keyframes orbDrift2{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(-50px,30px) scale(1.08)}66%{transform:translate(40px,-40px) scale(.92)}}
-@keyframes orbDrift3{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-50px) scale(1.12)}66%{transform:translate(-60px,20px) scale(.88)}}
-@keyframes orbDrift4{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(-30px,50px) scale(1.06)}66%{transform:translate(50px,-30px) scale(.94)}}
-@keyframes orbDrift5{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(70px,-40px) scale(1.15)}}
-@keyframes orbDrift6{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-60px,50px) scale(1.1)}}
 .hero-corner{position:absolute;width:50px;height:50px}
 .hero-corner.tl{top:48px;left:56px;border-top:1px solid rgba(255,255,255,.08);border-left:1px solid rgba(255,255,255,.08)}
 .hero-corner.br{bottom:48px;right:56px;border-bottom:1px solid rgba(255,255,255,.08);border-right:1px solid rgba(255,255,255,.08)}
@@ -61,10 +39,10 @@ body{font-family:'Pretendard Variable','Inter',sans-serif;background:var(--ink);
 /* ===== SECTIONS ===== */
 .section{padding:100px 0}
 .section{position:relative;z-index:1}
-.section.dark{background:rgba(45,45,63,.82);color:var(--canvas);backdrop-filter:blur(30px)}
-.section.light{background:rgba(255,245,240,.75);color:var(--ink);backdrop-filter:blur(30px)}
-.section.warm{background:rgba(242,201,76,.75);color:var(--ink);backdrop-filter:blur(30px)}
-.section.ink2{background:rgba(58,58,80,.82);color:var(--canvas);backdrop-filter:blur(30px)}
+.section.dark{background:#2D2D3F;color:var(--canvas)}
+.section.light{background:#FFF5F0;color:var(--ink)}
+.section.warm{background:rgba(242,201,76,.75);color:var(--ink)}
+.section.ink2{background:#3A3A50;color:var(--canvas)}
 .container{max-width:920px;margin:0 auto;padding:0 32px}
 .container.wide{max-width:1100px}
 
@@ -219,13 +197,6 @@ hr{border:none;border-top:1px solid rgba(255,255,255,.06);margin:48px 0}
 </head>
 <body>
 
-<!-- DREAMY BLUR ORBS -->
-<div class="blur-orb o1"></div>
-<div class="blur-orb o2"></div>
-<div class="blur-orb o3"></div>
-<div class="blur-orb o4"></div>
-<div class="blur-orb o5"></div>
-<div class="blur-orb o6"></div>
 
 <!-- HERO -->
 <section class="hero">
