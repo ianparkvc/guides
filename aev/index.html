@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aev &mdash; The Story</title>
+<title>TBD &mdash; The Story</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&display=swap" rel="stylesheet">
 <style>
@@ -21,9 +21,31 @@ body{font-family:'Inter',sans-serif;background:var(--ink);color:var(--ink);-webk
 ::selection{background:var(--ember);color:var(--canvas)}
 
 /* ===== HERO ===== */
-.hero{min-height:100vh;background:#2D2D3F;position:relative;z-index:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;
+.hero{min-height:100vh;background:rgba(45,45,63,.85);position:relative;z-index:1;backdrop-filter:blur(30px);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;
   background-image:var(--gradient-hero)}
 .hero::before{content:'';position:absolute;inset:0;pointer-events:none}
+/* dreamy blur overlays — STRONG */
+.blur-orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0}
+.blur-orb.o1{width:450px;height:450px;background:radial-gradient(circle,rgba(255,111,97,.5) 0%,rgba(255,111,97,0) 70%);top:0%;left:-8%;animation:orbDrift1 18s ease-in-out infinite}
+.blur-orb.o2{width:400px;height:400px;background:radial-gradient(circle,rgba(255,179,193,.45) 0%,rgba(255,179,193,0) 70%);top:25%;right:-8%;animation:orbDrift2 22s ease-in-out infinite}
+.blur-orb.o3{width:500px;height:500px;background:radial-gradient(circle,rgba(168,216,185,.4) 0%,rgba(168,216,185,0) 70%);top:50%;left:5%;animation:orbDrift3 20s ease-in-out infinite}
+.blur-orb.o4{width:380px;height:380px;background:radial-gradient(circle,rgba(242,201,76,.45) 0%,rgba(242,201,76,0) 70%);top:70%;right:0%;animation:orbDrift4 25s ease-in-out infinite}
+.blur-orb.o5{width:350px;height:350px;background:radial-gradient(circle,rgba(255,111,97,.35) 0%,rgba(255,111,97,0) 70%);top:40%;left:40%;animation:orbDrift5 28s ease-in-out infinite}
+.blur-orb.o6{width:300px;height:300px;background:radial-gradient(circle,rgba(255,179,193,.4) 0%,rgba(255,179,193,0) 70%);top:15%;left:50%;animation:orbDrift6 24s ease-in-out infinite}
+@media(min-width:768px){
+  .blur-orb.o1{width:800px;height:800px}
+  .blur-orb.o2{width:700px;height:700px}
+  .blur-orb.o3{width:900px;height:900px}
+  .blur-orb.o4{width:650px;height:650px}
+  .blur-orb.o5{width:600px;height:600px}
+  .blur-orb.o6{width:500px;height:500px}
+}
+@keyframes orbDrift1{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(60px,40px) scale(1.1)}66%{transform:translate(-30px,-20px) scale(.9)}}
+@keyframes orbDrift2{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(-50px,30px) scale(1.08)}66%{transform:translate(40px,-40px) scale(.92)}}
+@keyframes orbDrift3{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-50px) scale(1.12)}66%{transform:translate(-60px,20px) scale(.88)}}
+@keyframes orbDrift4{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(-30px,50px) scale(1.06)}66%{transform:translate(50px,-30px) scale(.94)}}
+@keyframes orbDrift5{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(70px,-40px) scale(1.15)}}
+@keyframes orbDrift6{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-60px,50px) scale(1.1)}}
 .hero-corner{position:absolute;width:50px;height:50px}
 .hero-corner.tl{top:48px;left:56px;border-top:1px solid rgba(255,255,255,.08);border-left:1px solid rgba(255,255,255,.08)}
 .hero-corner.br{bottom:48px;right:56px;border-bottom:1px solid rgba(255,255,255,.08);border-right:1px solid rgba(255,255,255,.08)}
@@ -38,10 +60,10 @@ body{font-family:'Inter',sans-serif;background:var(--ink);color:var(--ink);-webk
 /* ===== SECTIONS ===== */
 .section{padding:100px 0}
 .section{position:relative;z-index:1}
-.section.dark{background:#2D2D3F;color:var(--canvas)}
-.section.light{background:#FFF5F0;color:var(--ink)}
-.section.warm{background:rgba(242,201,76,.75);color:var(--ink)}
-.section.ink2{background:#3A3A50;color:var(--canvas)}
+.section.dark{background:rgba(45,45,63,.82);color:var(--canvas);backdrop-filter:blur(30px)}
+.section.light{background:rgba(255,245,240,.75);color:var(--ink);backdrop-filter:blur(30px)}
+.section.warm{background:rgba(242,201,76,.75);color:var(--ink);backdrop-filter:blur(30px)}
+.section.ink2{background:rgba(58,58,80,.82);color:var(--canvas);backdrop-filter:blur(30px)}
 .container{max-width:920px;margin:0 auto;padding:0 32px}
 .container.wide{max-width:1100px}
 
@@ -196,6 +218,13 @@ hr{border:none;border-top:1px solid rgba(255,255,255,.06);margin:48px 0}
 </head>
 <body>
 
+<!-- DREAMY BLUR ORBS -->
+<div class="blur-orb o1"></div>
+<div class="blur-orb o2"></div>
+<div class="blur-orb o3"></div>
+<div class="blur-orb o4"></div>
+<div class="blur-orb o5"></div>
+<div class="blur-orb o6"></div>
 
 <!-- HERO -->
 <section class="hero">
@@ -245,7 +274,7 @@ hr{border:none;border-top:1px solid rgba(255,255,255,.06);margin:48px 0}
     <div class="sec-title">We&rsquo;ve seen this <em>movie before</em></div>
     <div class="prose">
       <p>Apple cider vinegar was one of the most validated natural health products in the world. People knew it worked. But drinking it was disgusting. Then <strong>Goli</strong> put it in a gummy and built a <strong class="accent">$430M revenue brand</strong> in two years.</p>
-      <p>Our CSO Ian Park was on the Goli investment team at VMG Partners (which invested $20M). We saw firsthand what happens when you change the form factor of a proven ingredient. <strong>You don&rsquo;t need to prove the science. You just need to make it easy.</strong></p>
+      <p>Our CSO CSO was on the Goli investment team at VMG Partners (which invested $20M). We saw firsthand what happens when you change the form factor of a proven ingredient. <strong>You don&rsquo;t need to prove the science. You just need to make it easy.</strong></p>
       <div class="callout">The battle has shifted from efficacy to experience. The question isn&rsquo;t &ldquo;does it work?&rdquo; It&rsquo;s &ldquo;how do I want to take it?&rdquo;</div>
       <p>Gummies were the first answer. But gummies have their own problems:</p>
       <ol class="num-list">
@@ -290,7 +319,7 @@ hr{border:none;border-top:1px solid rgba(255,255,255,.06);margin:48px 0}
     <div class="sec-label">The Solution</div>
     <div class="sec-title">Tic Tac meets <em>creatine</em></div>
     <div class="prose">
-      <p>TBD makes nano-sized functional candies &mdash; think Tic Tac meets creatine &mdash; in pocket-sized tin cases.</p>
+      <p>TBD makes functional nano beads and Tic Tac-sized candies in pocket-sized tin cases. From micro beads you pour like sprinkles to candy pieces you pop one at a time &mdash; multiple sizes, one philosophy. Not a big gummy. Not a horse pill. Something you take without thinking.</p>
     </div>
     <div style="text-align:center;margin:40px 0">
       <img src="product-sample.jpg" alt="Aev nano supplement beads - actual product sample" style="max-width:420px;width:100%;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,.3)">
@@ -336,50 +365,39 @@ hr{border:none;border-top:1px solid rgba(255,255,255,.06);margin:48px 0}
 
     <div class="sub-head mt-32">Drop Culture &mdash; Tribe &amp; Identity</div>
     <div class="prose">
-      <p>The carrying case is just the start. Aev builds a <strong>drop culture ecosystem</strong>:</p>
-      <ul>
-        <li><strong>Collab drops</strong> &mdash; limited edition cases and curated stacks with fitness influencers, K-pop artists, athletes. Artist &times; Aev, Gym &times; Aev, Gamer &times; Aev editions.</li>
-        <li><strong>Apparel</strong> &mdash; hoodies, caps, gym wear. Not merch &mdash; streetwear. The kind of drops people line up for.</li>
-        <li><strong>Gifting sets</strong> &mdash; premium unboxing. A curated case + three tins + hoodie beats any supplement gift box on the market.</li>
-      </ul>
+      <p>The carrying case is just the start. Aev builds a <strong>drop culture ecosystem</strong> &mdash; not just accessories, but a full fandom product line:</p>
+    </div>
+    <div class="card-grid c3 mt-16">
+      <div class="card card-dark">
+        <div class="card-label">Cases</div>
+        <h3>Carrying Cases</h3>
+        <p>Limited edition collabs with fitness influencers, K-pop artists, athletes, designers. Seasonal colorways, premium materials.</p>
+      </div>
+      <div class="card card-dark">
+        <div class="card-label">Apparel</div>
+        <h3>Streetwear Drops</h3>
+        <p>Hoodies, caps, gym wear. Not merch &mdash; streetwear. The kind of drops people line up for.</p>
+      </div>
+      <div class="card card-dark">
+        <div class="card-label">Fandom</div>
+        <h3>Community Products</h3>
+        <p>Stickers, shaker bottles, gym towels, travel kits. Identity items that signal which crew you&rsquo;re in.</p>
+      </div>
+    </div>
+    <div class="card-grid c2 mt-16">
+      <div class="card card-dark">
+        <div class="card-label">Collabs</div>
+        <h3>Artist &times; Aev</h3>
+        <p>Curated stacks with custom packaging. Gym &times; Aev, Gamer &times; Aev, K-pop &times; Aev editions.</p>
+      </div>
+      <div class="card card-dark">
+        <div class="card-label">Gifting</div>
+        <h3>Premium Unboxing</h3>
+        <p>Case + three tins + hoodie. Beats any supplement gift box on the market.</p>
+      </div>
     </div>
     <div class="prose mt-32">
-      <p class="big-quote" style="color:var(--canvas)"><strong>TBD isn&rsquo;t a supplement brand.<br>It&rsquo;s a tribe and a culture.</strong><br><span style="font-size:18px;color:var(--stone)">The supplements are the entry point. The drops build identity.<br>People don&rsquo;t flex their creatine powder. They will flex their Aev drop.</span></p>
-    </div>
-
-    <hr>
-
-    <div class="sub-head mt-32" style="color:var(--canvas)">The form factor evolution</div>
-    <div class="flow">
-      <span>Powder (1990s)</span><span class="arr">&rarr;</span>
-      <span>Capsule (2000s)</span><span class="arr">&rarr;</span>
-      <span>Gummy (2020s)</span><span class="arr">&rarr;</span>
-      <span style="color:var(--ember);font-weight:800">Nano Candy (Now)</span>
-    </div>
-    <div class="tbl-wrap mt-32">
-      <table>
-        <tr><th>Generation</th><th>Solved</th><th>Still Broken</th></tr>
-        <tr><td>Powder</td><td>High dose possible</td><td>Needs water, shaker, prep time</td></tr>
-        <tr><td>Capsule</td><td>Portable, precise</td><td>Hard to swallow, feels medical</td></tr>
-        <tr><td>Gummy</td><td>Tastes good, enjoyable</td><td>Big, bulky bottle, low dose</td></tr>
-        <tr><td style="color:var(--ember);font-weight:800">Nano Candy</td><td style="color:var(--ember);font-weight:700">All of the above</td><td style="color:var(--ember)">&mdash;</td></tr>
-      </table>
-    </div>
-
-    <div class="sub-head mt-32" style="color:var(--canvas)">Nano vs. the competition</div>
-    <div class="tbl-wrap">
-      <table>
-        <tr><th></th><th>Create (Gummy)</th><th>Neuro (Mint)</th><th>BodyTech (Beadlet)</th><th class="aev-col">Aev (Nano)</th></tr>
-        <tr><td>Size</td><td>Large</td><td>Small</td><td>Nano (in capsule)</td><td class="aev-col">Nano (standalone)</td></tr>
-        <tr><td>Packaging</td><td>Bottle/Pouch</td><td>Tin can</td><td>Bottle</td><td class="aev-col">Tin case</td></tr>
-        <tr><td>Dose/piece</td><td>1.5g</td><td>40mg caffeine</td><td>Varies</td><td class="aev-col">1g creatine / 100mg caffeine</td></tr>
-        <tr><td>Enjoyable</td><td>Yes</td><td>Yes</td><td>No (swallow)</td><td class="aev-col">Yes</td></tr>
-        <tr><td>Pocketable</td><td>No</td><td>Yes</td><td>No</td><td class="aev-col">Yes</td></tr>
-        <tr><td>Supplement-grade</td><td>Yes</td><td>No (low dose)</td><td>Yes</td><td class="aev-col">Yes</td></tr>
-      </table>
-    </div>
-    <div class="prose mt-32">
-      <p class="big-quote" style="color:var(--canvas)">The first brand to deliver supplement-grade dosing<br>in a nano form factor you <strong>actually enjoy,</strong><br>in packaging you already carry.</p>
+      <p class="big-quote" style="color:var(--canvas)"><strong>TBD isn&rsquo;t a supplement brand.<br>It&rsquo;s a tribe and a culture.</strong><br><span style="font-size:18px;color:var(--stone)">The supplements are the entry point. The drops build identity.<br>The community creates belonging.</span></p>
     </div>
   </div>
 </section>
@@ -441,7 +459,9 @@ hr{border:none;border-top:1px solid rgba(255,255,255,.06);margin:48px 0}
       </table>
     </div>
     <div class="prose">
-      <p>All three are among the most researched, clinically validated compounds in sports nutrition. The platform is expandable in two directions:</p>
+      <p><strong>Creatine</strong> &mdash; 700+ peer-reviewed studies. The most validated performance supplement in existence.<br>
+      <strong>Beta-Alanine</strong> &mdash; Proven carnosine buffer. Endorsed by ISSN.<br>
+      <strong>Caffeine</strong> &mdash; Precise dosing replaces the guesswork of coffee.</p>
     </div>
     <div class="card-grid c2 mt-32">
       <div class="card card-light">
@@ -455,6 +475,41 @@ hr{border:none;border-top:1px solid rgba(255,255,255,.06);margin:48px 0}
         <p>Adaptogenic blends, herbal combos, functional mushrooms &mdash; developed with our network of Oriental medicine practitioners. K-wellness meets Tic Tac.</p>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- WHY NANO -->
+<section class="section dark">
+  <div class="container reveal">
+    <div class="sec-label">Why Nano Wins</div>
+    <div class="sec-title">The form factor <em>evolution</em></div>
+    <div class="flow">
+      <span>Powder (1990s)</span><span class="arr">&rarr;</span>
+      <span>Capsule (2000s)</span><span class="arr">&rarr;</span>
+      <span>Gummy (2020s)</span><span class="arr">&rarr;</span>
+      <span style="color:var(--ember);font-weight:800">Nano Candy (Now)</span>
+    </div>
+    <div class="tbl-wrap mt-32">
+      <table>
+        <tr><th>Generation</th><th>Solved</th><th>Still Broken</th></tr>
+        <tr><td>Powder</td><td>High dose possible</td><td>Needs water, shaker, prep time</td></tr>
+        <tr><td>Capsule</td><td>Portable, precise</td><td>Hard to swallow, feels medical</td></tr>
+        <tr><td>Gummy</td><td>Tastes good, enjoyable</td><td>Big, bulky bottle, low dose</td></tr>
+        <tr><td style="color:var(--ember);font-weight:800">Nano Candy</td><td style="color:var(--ember);font-weight:700">All of the above</td><td style="color:var(--ember)">&mdash;</td></tr>
+      </table>
+    </div>
+    <div class="tbl-wrap mt-32">
+      <table>
+        <tr><th></th><th>Create (Gummy)</th><th>Neuro (Mint)</th><th>BodyTech (Beadlet)</th><th class="aev-col">Aev (Nano)</th></tr>
+        <tr><td>Size</td><td>Large</td><td>Small</td><td>Nano (in capsule)</td><td class="aev-col">Nano (standalone)</td></tr>
+        <tr><td>Packaging</td><td>Bottle/Pouch</td><td>Tin can</td><td>Bottle</td><td class="aev-col">Tin case</td></tr>
+        <tr><td>Dose/piece</td><td>1.5g</td><td>40mg caffeine</td><td>Varies</td><td class="aev-col">1g creatine / 100mg caffeine</td></tr>
+        <tr><td>Enjoyable</td><td>Yes</td><td>Yes</td><td>No (swallow)</td><td class="aev-col">Yes</td></tr>
+        <tr><td>Pocketable</td><td>No</td><td>Yes</td><td>No</td><td class="aev-col">Yes</td></tr>
+        <tr><td>Supplement-grade</td><td>Yes</td><td>No (low dose)</td><td>Yes</td><td class="aev-col">Yes</td></tr>
+      </table>
+    </div>
+    <p class="big-quote mt-48" style="color:var(--canvas)">The first brand to deliver supplement-grade dosing<br>in a nano form factor you <strong>actually enjoy.</strong></p>
   </div>
 </section>
 
@@ -480,21 +535,37 @@ hr{border:none;border-top:1px solid rgba(255,255,255,.06);margin:48px 0}
       <div class="card card-light">
         <div class="card-label">Create Wellness</div>
         <h3>Creatine gummy creator</h3>
-        <p>$25M+ raised, 250M+ gummies sold, profitable early, 50%+ female customers. Nationwide retail (Target, Sprouts, GNC, Amazon). Proved the market &mdash; but still a gummy in a bottle, creatine-only, no stacking.</p>
+        <p>$25M+ raised. 250M+ gummies. Target/Sprouts/GNC nationwide. 50%+ female customers. AG1, Vital Proteins execs hired.</p>
+        <p class="card-ital">Aev&rsquo;s take: They proved the market. But gummy in a bottle &mdash; big, sticky, no stacking, no AI. We&rsquo;re building the next category.</p>
       </div>
       <div class="card card-light">
         <div class="card-label">Noon World</div>
         <h3>Asian wellness branding</h3>
-        <p>Cognitive mushroom gummies (lion&rsquo;s mane, reishi, cordyceps) with patent-pending dual-layer tech. Walmart 104 stores. Opened the door for Eastern ingredients in Western wellness &mdash; but different category (nootropics, not performance).</p>
+        <p>Mushroom gummies. Dual-layer patent tech. Walmart 104 stores. &ldquo;Lab meets lifestyle.&rdquo; Neuroscience PhD co-founder.</p>
+        <p class="card-ital">Aev&rsquo;s take: Opened the door for Eastern ingredients. We share the heritage angle &mdash; ours goes deeper with our CEO&rsquo;s medical network.</p>
       </div>
       <div class="card card-light">
         <div class="card-label">Neuro Gum</div>
         <h3>Tin can form factor proof</h3>
-        <p>$120M projected 2026 revenue, $100-120M valuation. Functional caffeine gum &amp; mints in tin cans. Proved tins scale to $100M+ &mdash; but low dosing (40mg caffeine), not supplement-grade.</p>
+        <p>$120M projected 2026. $100-120M valuation. Caffeine 40mg gum/mints in tin cans. Amazon $2.2M+/mo.</p>
+        <p class="card-ital">Aev&rsquo;s take: Proved tin cans scale to $100M+. But low dosing. We deliver supplement-grade doses in a similar format.</p>
       </div>
     </div>
 
-    <div class="prose mt-32"><p>7+ brands have already entered creatine gummies &mdash; Optimum Nutrition, Bounce, Bear Balanced, Legion, Swoly, ESN, TopGum. When ON (a Glanbia subsidiary with infinite distribution) launches creatine gummies, the gummy game is over for startups. <strong class="accent">You don&rsquo;t win by being the 8th creatine gummy. You win by being the 1st nano candy.</strong></p></div>
+    <div class="sub-head mt-48">The gummy red ocean</div>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>Brand</th><th>What</th><th>Status</th></tr>
+        <tr><td>Optimum Nutrition</td><td>#1 US creatine brand. 5g gummies (2026).</td><td>800-lb gorilla entering.</td></tr>
+        <tr><td>Bounce Nutrition</td><td>6g/serving vegan creatine gummies.</td><td>7-figure revenue year one.</td></tr>
+        <tr><td>Bear Balanced</td><td>Creatine 3g + nootropic blend.</td><td>Closest to stacking, but it&rsquo;s a blend.</td></tr>
+        <tr><td>Legion</td><td>Premium transparent creatine gummies.</td><td>$1.33/serving. Transparency play.</td></tr>
+        <tr><td>Swoly</td><td>Budget creatine gummies 4g.</td><td>$1.26/serving. Price play.</td></tr>
+        <tr><td>ESN</td><td>European. 3.4g creatine gummies.</td><td>UK launch 2025.</td></tr>
+        <tr><td>TopGum</td><td>B2B manufacturer. White-label.</td><td>Supplying at scale.</td></tr>
+      </table>
+    </div>
+    <div class="prose"><p class="callout">You don&rsquo;t win by being the 8th creatine gummy. You win by being the 1st nano candy.</p></div>
 
     <div class="sub-head mt-48">The competitive matrix</div>
     <div class="tbl-wrap">
@@ -608,7 +679,7 @@ hr{border:none;border-top:1px solid rgba(255,255,255,.06);margin:48px 0}
     </div>
     <p class="big-quote mt-32" style="color:var(--ink)">The difference is <strong>40 points of margin.</strong><br>That&rsquo;s not an optimization. That&rsquo;s a different business model.</p>
     <div class="prose">
-      <p class="callout">Revenue without margin is a treadmill, not a business. &mdash; Our CSO was on the Goli investment team at VMG. He watched a $430M-revenue brand collapse. That was a $20M write-off burned into our DNA.</p>
+      <p class="callout">Revenue without margin is a treadmill, not a business. &mdash; CSO CSO was on the Goli investment team at VMG. He watched a $430M-revenue brand collapse. That was a $20M write-off burned into our DNA.</p>
     </div>
     <div class="sub-head">Customer Journey</div>
     <div class="flow" style="background:var(--ink)">
@@ -648,8 +719,6 @@ hr{border:none;border-top:1px solid rgba(255,255,255,.06);margin:48px 0}
         <tr><td>AG1</td><td>Greens blend</td><td>$6B+ valuation</td><td>$600M+ ARR.</td></tr>
         <tr><td>OLLY</td><td>Gummy vitamins</td><td>Acquired ~$500M+</td><td>Exit precedent (Unilever).</td></tr>
         <tr><td>Tabs</td><td>Functional chocolate/tabs</td><td>$0 funding</td><td>$11M rev. 100% organic.</td></tr>
-        <tr><td>Noon</td><td>Cognitive mushroom gummies</td><td>Not disclosed</td><td>Walmart 104 stores. Asian medicine angle.</td></tr>
-        <tr><td>Bounce</td><td>High-dose creatine gummies</td><td>Not disclosed</td><td>7-figure revenue in year 1.</td></tr>
       </table>
     </div>
   </div>
