@@ -10,15 +10,15 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --canvas:#FAF5F0;
-  --ink:#1A1A2E;
-  --ember:#6A4C93;
-  --slate:#5E5478;
-  --stone:#A09ABC;
+  --canvas:#FFF5F0;
+  --ink:#2D2D3F;
+  --ember:#FF6F61;
+  --slate:#5A5A72;
+  --stone:#9A9AB0;
   --white:#fff;
-  --warm:#F2E1D4;
-  --ink2:#252040;
-  --gradient-accent:linear-gradient(135deg,#6A4C93,#A77B9D,#D6C3E0);
+  --warm:#FFE8E0;
+  --ink2:#3A3A50;
+  --gradient-accent:linear-gradient(135deg,#FF6F61,#FFB3C1,#A8D8B9);
   --glass:rgba(255,255,255,.08);
   --glass2:rgba(255,255,255,.14);
 }
@@ -29,12 +29,12 @@ body{font-family:'Pretendard Variable','Inter',sans-serif;background:var(--ink);
 
 /* ===== BLUR ORBS ===== */
 .blur-orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0}
-.blur-orb.o1{width:450px;height:450px;background:radial-gradient(circle,rgba(106,76,147,.45) 0%,rgba(106,76,147,0) 70%);top:0%;left:-8%;animation:orbDrift1 18s ease-in-out infinite}
-.blur-orb.o2{width:400px;height:400px;background:radial-gradient(circle,rgba(167,123,157,.4) 0%,rgba(167,123,157,0) 70%);top:25%;right:-8%;animation:orbDrift2 22s ease-in-out infinite}
-.blur-orb.o3{width:500px;height:500px;background:radial-gradient(circle,rgba(214,195,224,.4) 0%,rgba(214,195,224,0) 70%);top:50%;left:5%;animation:orbDrift3 20s ease-in-out infinite}
-.blur-orb.o4{width:380px;height:380px;background:radial-gradient(circle,rgba(242,225,212,.4) 0%,rgba(242,225,212,0) 70%);top:70%;right:0%;animation:orbDrift4 25s ease-in-out infinite}
-.blur-orb.o5{width:350px;height:350px;background:radial-gradient(circle,rgba(106,76,147,.3) 0%,rgba(106,76,147,0) 70%);top:40%;left:40%;animation:orbDrift5 28s ease-in-out infinite}
-.blur-orb.o6{width:300px;height:300px;background:radial-gradient(circle,rgba(214,195,224,.35) 0%,rgba(214,195,224,0) 70%);top:15%;left:50%;animation:orbDrift6 24s ease-in-out infinite}
+.blur-orb.o1{width:450px;height:450px;background:radial-gradient(circle,rgba(255,111,97,.45) 0%,rgba(255,111,97,0) 70%);top:0%;left:-8%;animation:orbDrift1 18s ease-in-out infinite}
+.blur-orb.o2{width:400px;height:400px;background:radial-gradient(circle,rgba(255,179,193,.4) 0%,rgba(255,179,193,0) 70%);top:25%;right:-8%;animation:orbDrift2 22s ease-in-out infinite}
+.blur-orb.o3{width:500px;height:500px;background:radial-gradient(circle,rgba(168,216,185,.4) 0%,rgba(168,216,185,0) 70%);top:50%;left:5%;animation:orbDrift3 20s ease-in-out infinite}
+.blur-orb.o4{width:380px;height:380px;background:radial-gradient(circle,rgba(242,201,76,.4) 0%,rgba(242,201,76,0) 70%);top:70%;right:0%;animation:orbDrift4 25s ease-in-out infinite}
+.blur-orb.o5{width:350px;height:350px;background:radial-gradient(circle,rgba(255,111,97,.3) 0%,rgba(255,111,97,0) 70%);top:40%;left:40%;animation:orbDrift5 28s ease-in-out infinite}
+.blur-orb.o6{width:300px;height:300px;background:radial-gradient(circle,rgba(168,216,185,.35) 0%,rgba(168,216,185,0) 70%);top:15%;left:50%;animation:orbDrift6 24s ease-in-out infinite}
 @media(min-width:768px){
   .blur-orb.o1{width:800px;height:800px}
   .blur-orb.o2{width:700px;height:700px}
@@ -51,8 +51,8 @@ body{font-family:'Pretendard Variable','Inter',sans-serif;background:var(--ink);
 @keyframes orbDrift6{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-60px,50px) scale(1.1)}}
 
 /* ===== HERO ===== */
-.hero{min-height:100vh;background:rgba(26,26,46,.88);position:relative;z-index:1;backdrop-filter:blur(30px);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
-  background-image:radial-gradient(ellipse 1200px 700px at 25% 25%,rgba(106,76,147,.15) 0%,rgba(167,123,157,.12) 25%,rgba(214,195,224,.08) 45%,rgba(242,225,212,.05) 60%,transparent 80%)}
+.hero{min-height:100vh;background:rgba(45,45,63,.88);position:relative;z-index:1;backdrop-filter:blur(30px);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+  background-image:radial-gradient(ellipse 1200px 700px at 25% 25%,rgba(255,111,97,.15) 0%,rgba(255,179,193,.12) 25%,rgba(168,216,185,.08) 45%,rgba(242,201,76,.05) 60%,transparent 80%)}
 .hero-corner{position:absolute;width:50px;height:50px}
 .hero-corner.tl{top:48px;left:56px;border-top:1px solid rgba(255,255,255,.08);border-left:1px solid rgba(255,255,255,.08)}
 .hero-corner.br{bottom:48px;right:56px;border-bottom:1px solid rgba(255,255,255,.08);border-right:1px solid rgba(255,255,255,.08)}
@@ -66,10 +66,10 @@ body{font-family:'Pretendard Variable','Inter',sans-serif;background:var(--ink);
 
 /* ===== SECTIONS ===== */
 .section{padding:80px 0;position:relative;z-index:1}
-.section.dark{background:rgba(26,26,46,.82);color:var(--canvas);backdrop-filter:blur(30px)}
-.section.light{background:rgba(250,245,240,.78);color:var(--ink);backdrop-filter:blur(30px)}
-.section.warm{background:rgba(242,225,212,.78);color:var(--ink);backdrop-filter:blur(30px)}
-.section.ink2{background:rgba(37,32,64,.82);color:var(--canvas);backdrop-filter:blur(30px)}
+.section.dark{background:rgba(45,45,63,.82);color:var(--canvas);backdrop-filter:blur(30px)}
+.section.light{background:rgba(255,245,240,.78);color:var(--ink);backdrop-filter:blur(30px)}
+.section.warm{background:rgba(242,201,76,.78);color:var(--ink);backdrop-filter:blur(30px)}
+.section.ink2{background:rgba(58,58,80,.82);color:var(--canvas);backdrop-filter:blur(30px)}
 .container{max-width:920px;margin:0 auto;padding:0 32px}
 
 /* ===== SECTION HEADERS ===== */
@@ -163,7 +163,7 @@ td:first-child{font-weight:600}
 
 /* ===== ENDGAME ===== */
 .endgame{text-align:center;padding:80px 32px;
-  background-image:radial-gradient(ellipse 1100px 600px at 60% 50%,rgba(106,76,147,.1) 0%,rgba(167,123,157,.07) 30%,rgba(214,195,224,.04) 50%,transparent 75%)}
+  background-image:radial-gradient(ellipse 1100px 600px at 60% 50%,rgba(255,111,97,.1) 0%,rgba(255,179,193,.07) 30%,rgba(168,216,185,.04) 50%,transparent 75%)}
 .endgame .lines{font-family:'Playfair Display',serif;font-size:clamp(18px,2.5vw,26px);font-weight:400;color:var(--canvas);line-height:2;margin-bottom:48px}
 .endgame .lines strong{color:var(--ember);font-weight:700}
 .endgame .brand{font-size:56px;font-weight:900;color:var(--canvas);letter-spacing:.1em}
@@ -179,7 +179,7 @@ hr{border:none;border-top:1px solid rgba(255,255,255,.06);margin:40px 0}
 @media(max-width:768px){.econ-grid{grid-template-columns:1fr}}
 .econ-box{border-radius:14px;padding:24px;text-align:center}
 .econ-box.old{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06)}
-.econ-box.new{background:rgba(106,76,147,.08);border:1px solid rgba(106,76,147,.15)}
+.econ-box.new{background:rgba(255,111,97,.08);border:1px solid rgba(255,111,97,.15)}
 .econ-box .econ-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--stone);margin-bottom:12px}
 .econ-box.new .econ-label{color:var(--ember)}
 .econ-box .econ-val{font-size:48px;font-weight:900;line-height:1}
