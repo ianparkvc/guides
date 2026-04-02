@@ -9,11 +9,11 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --canvas:#F9F6F8;--ink:#2E4A7D;--ember:#E1B7E5;--slate:#5A6E8A;--stone:#8A9BB5;
+  --canvas:#FFF8F5;--ink:#2D2D3F;--ember:#FF6F61;--slate:#5A5A72;--stone:#9A9AB0;
   --white:#fff;--glass:rgba(255,255,255,.08);--glass2:rgba(255,255,255,.14);
-  --warm:#F4EEF0;--ink2:#1E3560;
-  --gradient-hero:radial-gradient(ellipse 1200px 700px at 25% 25%,rgba(167,199,237,.25) 0%,rgba(225,183,229,.2) 25%,rgba(168,216,185,.12) 45%,rgba(244,211,180,.08) 60%,transparent 80%);
-  --gradient-accent:linear-gradient(135deg,#A7C6ED,#E1B7E5,#A8D8B9);
+  --warm:#FFF0ED;--ink2:#3A3A50;
+  --gradient-hero:radial-gradient(ellipse 1200px 700px at 30% 30%,rgba(255,111,97,.15) 0%,rgba(255,179,193,.12) 25%,rgba(168,216,185,.08) 45%,rgba(242,201,76,.06) 60%,transparent 80%);
+  --gradient-accent:linear-gradient(135deg,#FF6F61,#FFB3C1,#A8D8B9);
 }
 html{scroll-behavior:smooth;font-size:16px}
 p,li,td,th,h2,h3,h4{text-wrap:pretty;overflow-wrap:break-word;word-break:keep-all}
@@ -21,17 +21,17 @@ body{font-family:'Inter',sans-serif;background:var(--ink);color:var(--ink);-webk
 ::selection{background:var(--ember);color:var(--canvas)}
 
 /* ===== HERO ===== */
-.hero{min-height:100vh;background:rgba(30,53,96,.85);position:relative;z-index:1;backdrop-filter:blur(30px);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;
+.hero{min-height:100vh;background:rgba(45,45,63,.85);position:relative;z-index:1;backdrop-filter:blur(30px);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;
   background-image:var(--gradient-hero)}
 .hero::before{content:'';position:absolute;inset:0;pointer-events:none}
 /* dreamy blur overlays — STRONG */
 .blur-orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0}
-.blur-orb.o1{width:450px;height:450px;background:radial-gradient(circle,rgba(167,198,237,.55) 0%,rgba(167,198,237,0) 70%);top:0%;left:-8%;animation:orbDrift1 18s ease-in-out infinite}
-.blur-orb.o2{width:400px;height:400px;background:radial-gradient(circle,rgba(225,183,229,.5) 0%,rgba(225,183,229,0) 70%);top:25%;right:-8%;animation:orbDrift2 22s ease-in-out infinite}
-.blur-orb.o3{width:500px;height:500px;background:radial-gradient(circle,rgba(168,216,185,.45) 0%,rgba(168,216,185,0) 70%);top:50%;left:5%;animation:orbDrift3 20s ease-in-out infinite}
-.blur-orb.o4{width:380px;height:380px;background:radial-gradient(circle,rgba(244,211,180,.5) 0%,rgba(244,211,180,0) 70%);top:70%;right:0%;animation:orbDrift4 25s ease-in-out infinite}
-.blur-orb.o5{width:350px;height:350px;background:radial-gradient(circle,rgba(167,198,237,.4) 0%,rgba(167,198,237,0) 70%);top:40%;left:40%;animation:orbDrift5 28s ease-in-out infinite}
-.blur-orb.o6{width:300px;height:300px;background:radial-gradient(circle,rgba(225,183,229,.4) 0%,rgba(225,183,229,0) 70%);top:15%;left:50%;animation:orbDrift6 24s ease-in-out infinite}
+.blur-orb.o1{width:450px;height:450px;background:radial-gradient(circle,rgba(255,111,97,.5) 0%,rgba(255,111,97,0) 70%);top:0%;left:-8%;animation:orbDrift1 18s ease-in-out infinite}
+.blur-orb.o2{width:400px;height:400px;background:radial-gradient(circle,rgba(255,179,193,.45) 0%,rgba(255,179,193,0) 70%);top:25%;right:-8%;animation:orbDrift2 22s ease-in-out infinite}
+.blur-orb.o3{width:500px;height:500px;background:radial-gradient(circle,rgba(168,216,185,.4) 0%,rgba(168,216,185,0) 70%);top:50%;left:5%;animation:orbDrift3 20s ease-in-out infinite}
+.blur-orb.o4{width:380px;height:380px;background:radial-gradient(circle,rgba(242,201,76,.45) 0%,rgba(242,201,76,0) 70%);top:70%;right:0%;animation:orbDrift4 25s ease-in-out infinite}
+.blur-orb.o5{width:350px;height:350px;background:radial-gradient(circle,rgba(255,111,97,.35) 0%,rgba(255,111,97,0) 70%);top:40%;left:40%;animation:orbDrift5 28s ease-in-out infinite}
+.blur-orb.o6{width:300px;height:300px;background:radial-gradient(circle,rgba(255,179,193,.4) 0%,rgba(255,179,193,0) 70%);top:15%;left:50%;animation:orbDrift6 24s ease-in-out infinite}
 @media(min-width:768px){
   .blur-orb.o1{width:800px;height:800px}
   .blur-orb.o2{width:700px;height:700px}
@@ -60,10 +60,10 @@ body{font-family:'Inter',sans-serif;background:var(--ink);color:var(--ink);-webk
 /* ===== SECTIONS ===== */
 .section{padding:100px 0}
 .section{position:relative;z-index:1}
-.section.dark{background:rgba(30,53,96,.8);color:var(--canvas);backdrop-filter:blur(30px)}
-.section.light{background:rgba(249,246,248,.75);color:var(--ink);backdrop-filter:blur(30px)}
-.section.warm{background:rgba(244,238,240,.75);color:var(--ink);backdrop-filter:blur(30px)}
-.section.ink2{background:rgba(38,58,100,.8);color:var(--canvas);backdrop-filter:blur(30px)}
+.section.dark{background:rgba(45,45,63,.82);color:var(--canvas);backdrop-filter:blur(30px)}
+.section.light{background:rgba(255,248,245,.75);color:var(--ink);backdrop-filter:blur(30px)}
+.section.warm{background:rgba(255,240,237,.75);color:var(--ink);backdrop-filter:blur(30px)}
+.section.ink2{background:rgba(58,58,80,.82);color:var(--canvas);backdrop-filter:blur(30px)}
 .container{max-width:920px;margin:0 auto;padding:0 32px}
 .container.wide{max-width:1100px}
 
@@ -169,7 +169,7 @@ td:first-child{font-weight:600}
 
 /* ===== ENDGAME ===== */
 .endgame{text-align:center;padding:80px 32px;
-  background-image:radial-gradient(ellipse 1100px 600px at 60% 50%,rgba(167,198,237,.15) 0%,rgba(225,183,229,.1) 30%,rgba(168,216,185,.06) 50%,transparent 75%)}
+  background-image:radial-gradient(ellipse 1100px 600px at 60% 50%,rgba(255,111,97,.12) 0%,rgba(255,179,193,.08) 30%,rgba(168,216,185,.05) 50%,transparent 75%)}
 .endgame .lines{font-family:'Playfair Display',serif;font-size:clamp(20px,2.5vw,28px);font-weight:400;color:var(--canvas);line-height:2;margin-bottom:48px}
 .endgame .lines strong{color:var(--ember);font-weight:700}
 .endgame .brand{font-size:56px;font-weight:900;color:var(--canvas);letter-spacing:.1em}
@@ -274,7 +274,7 @@ hr{border:none;border-top:1px solid rgba(255,255,255,.06);margin:48px 0}
     <div class="sec-title">We&rsquo;ve seen this <em>movie before</em></div>
     <div class="prose">
       <p>Apple cider vinegar was one of the most validated natural health products in the world. People knew it worked. But drinking it was disgusting. Then <strong>Goli</strong> put it in a gummy and built a <strong class="accent">$430M revenue brand</strong> in two years.</p>
-      <p>Our CSO Ian Park was on the Goli investment team at VMG Partners (which invested $20M). We saw firsthand what happens when you change the form factor of a proven ingredient. <strong>You don&rsquo;t need to prove the science. You just need to make it easy.</strong></p>
+      <p>Our CSO CSO was on the Goli investment team at VMG Partners (which invested $20M). We saw firsthand what happens when you change the form factor of a proven ingredient. <strong>You don&rsquo;t need to prove the science. You just need to make it easy.</strong></p>
       <div class="callout">The battle has shifted from efficacy to experience. The question isn&rsquo;t &ldquo;does it work?&rdquo; It&rsquo;s &ldquo;how do I want to take it?&rdquo;</div>
       <p>Gummies were the first answer. But gummies have their own problems:</p>
       <ol class="num-list">
@@ -679,7 +679,7 @@ hr{border:none;border-top:1px solid rgba(255,255,255,.06);margin:48px 0}
     </div>
     <p class="big-quote mt-32" style="color:var(--ink)">The difference is <strong>40 points of margin.</strong><br>That&rsquo;s not an optimization. That&rsquo;s a different business model.</p>
     <div class="prose">
-      <p class="callout">Revenue without margin is a treadmill, not a business. &mdash; CSO Ian Park was on the Goli investment team at VMG. He watched a $430M-revenue brand collapse. That was a $20M write-off burned into our DNA.</p>
+      <p class="callout">Revenue without margin is a treadmill, not a business. &mdash; CSO CSO was on the Goli investment team at VMG. He watched a $430M-revenue brand collapse. That was a $20M write-off burned into our DNA.</p>
     </div>
     <div class="sub-head">Customer Journey</div>
     <div class="flow" style="background:var(--ink)">
@@ -732,19 +732,19 @@ hr{border:none;border-top:1px solid rgba(255,255,255,.06);margin:48px 0}
     <div class="team-grid">
       <div class="t-card">
         <div class="t-avatar">B</div>
-        <h3>Byung</h3>
+        <h3>CEO</h3>
         <div class="role">CEO &middot; 40%</div>
         <p>Co-founder of one of the top 4 Chinese medical schools in the US. Deep practitioner network nationwide. Manufacturing secured through patented partners. Samples produced. Bridges traditional Asian medicine with modern product innovation.</p>
       </div>
       <div class="t-card">
         <div class="t-avatar">W</div>
-        <h3>Will</h3>
+        <h3>CTO</h3>
         <div class="role">CTO &middot; 30%</div>
         <p>Chinese/HK background. AI marketing engine architect. Creative automation, performance optimization, data infrastructure. Deep technical expertise spanning AI and engineering.</p>
       </div>
       <div class="t-card">
         <div class="t-avatar">IP</div>
-        <h3>Ian Park</h3>
+        <h3>CSO</h3>
         <div class="role">CSO &middot; 30%</div>
         <p>Silicon Valley VC, 10yr LP+GP experience. McKinsey &rarr; KIC &rarr; multiple funds. Founder, Ian &amp; Partners. On Goli investment team at VMG. $20M write-off lesson. 11K+ newsletter. Brand strategy, fundraising.</p>
       </div>
