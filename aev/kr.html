@@ -9,9 +9,9 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --canvas:#FFFAF5;--ink:#1E1E2A;--ember:#FF8C69;--slate:#6B7280;--stone:#A1A1AA;
+  --canvas:#FFF5EE;--ink:#2B2D42;--ember:#FF6B6B;--slate:#5C6378;--stone:#9EA3B5;
   --white:#fff;--glass:rgba(255,255,255,.06);--glass2:rgba(255,255,255,.10);
-  --warm:#FFF7F0;--ink2:#2A2A3A;
+  --warm:#FFEDD5;--ink2:#353760;
 }
 html{scroll-behavior:smooth;font-size:16px}
 body{font-family:'Inter',sans-serif;background:var(--ink);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -19,7 +19,7 @@ body{font-family:'Inter',sans-serif;background:var(--ink);color:var(--ink);-webk
 
 /* ===== HERO ===== */
 .hero{min-height:100vh;background:var(--ink);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;
-  background-image:radial-gradient(ellipse 900px 500px at 50% 55%,rgba(212,87,42,.07) 0%,transparent 70%)}
+  background-image:radial-gradient(ellipse 1000px 600px at 50% 40%,rgba(88,166,255,.15) 0%,rgba(255,107,107,.1) 30%,rgba(255,237,213,.08) 60%,transparent 80%)}
 .hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h1v1H0z' fill='%23ffffff' fill-opacity='.015'/%3E%3C/svg%3E");pointer-events:none}
 .hero-corner{position:absolute;width:50px;height:50px}
 .hero-corner.tl{top:48px;left:56px;border-top:1px solid rgba(255,255,255,.08);border-left:1px solid rgba(255,255,255,.08)}
@@ -143,7 +143,7 @@ td:first-child{font-weight:600}
 
 /* ===== ENDGAME ===== */
 .endgame{text-align:center;padding:80px 32px;
-  background-image:radial-gradient(ellipse 800px 400px at 50% 55%,rgba(212,87,42,.06) 0%,transparent 70%)}
+  background-image:radial-gradient(ellipse 900px 500px at 50% 50%,rgba(88,166,255,.12) 0%,rgba(255,107,107,.08) 30%,transparent 70%)}
 .endgame .lines{font-family:'Playfair Display',serif;font-size:clamp(20px,2.5vw,28px);font-weight:400;color:var(--canvas);line-height:2;margin-bottom:48px}
 .endgame .lines strong{color:var(--ember);font-weight:700}
 .endgame .brand{font-size:56px;font-weight:900;color:var(--canvas);letter-spacing:.1em}
