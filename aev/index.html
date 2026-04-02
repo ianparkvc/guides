@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aev &mdash; The Story</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --canvas:#F8F5ED;--ink:#0E1117;--ember:#D4572A;--slate:#3C4553;--stone:#8A857D;
+  --white:#fff;--glass:rgba(255,255,255,.06);--glass2:rgba(255,255,255,.10);
+  --warm:#FFF8F5;--ink2:#13161e;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',sans-serif;background:var(--ink);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--ember);color:var(--canvas)}
+
+/* ===== HERO ===== */
+.hero{min-height:100vh;background:var(--ink);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;
+  background-image:radial-gradient(ellipse 900px 500px at 50% 55%,rgba(212,87,42,.07) 0%,transparent 70%)}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h1v1H0z' fill='%23ffffff' fill-opacity='.015'/%3E%3C/svg%3E");pointer-events:none}
+.hero-corner{position:absolute;width:50px;height:50px}
+.hero-corner.tl{top:48px;left:56px;border-top:1px solid rgba(255,255,255,.08);border-left:1px solid rgba(255,255,255,.08)}
+.hero-corner.br{bottom:48px;right:56px;border-bottom:1px solid rgba(255,255,255,.08);border-right:1px solid rgba(255,255,255,.08)}
+.hero .brand{font-size:clamp(100px,14vw,180px);font-weight:900;color:var(--canvas);letter-spacing:.12em;line-height:1;opacity:0;animation:fadeUp .8s .2s forwards}
+.hero .tagline{font-family:'Playfair Display',serif;font-size:clamp(16px,2vw,22px);font-weight:400;font-style:italic;color:var(--stone);margin-top:20px;opacity:0;animation:fadeUp .8s .5s forwards}
+.hero .liner{max-width:680px;font-size:clamp(14px,1.3vw,17px);color:rgba(255,255,255,.5);line-height:1.7;margin-top:48px;padding:0 24px;opacity:0;animation:fadeUp .8s .8s forwards}
+.hero .divider{width:60px;height:2px;background:var(--ember);margin:40px auto 0;opacity:0;animation:fadeUp .8s .6s forwards}
+.hero .conf{position:absolute;bottom:48px;left:56px;font-size:10px;color:var(--slate);letter-spacing:3px;text-transform:uppercase}
+.hero .date{position:absolute;bottom:48px;right:56px;font-size:10px;color:var(--slate);letter-spacing:1px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== SECTIONS ===== */
+.section{padding:100px 0}
+.section.dark{background:var(--ink);color:var(--canvas)}
+.section.light{background:var(--canvas);color:var(--ink)}
+.section.warm{background:var(--warm);color:var(--ink)}
+.section.ink2{background:var(--ink2);color:var(--canvas)}
+.container{max-width:920px;margin:0 auto;padding:0 32px}
+.container.wide{max-width:1100px}
+
+/* ===== SECTION HEADERS ===== */
+.sec-label{font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--ember);margin-bottom:16px}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,48px);font-weight:700;line-height:1.15;margin-bottom:32px}
+.sec-title em{font-style:italic;color:var(--ember);font-weight:400}
+
+/* ===== PROSE ===== */
+.prose{font-size:17px;line-height:1.8;color:var(--slate)}
+.dark .prose{color:var(--stone)}
+.prose p{margin-bottom:24px}
+.prose strong{font-weight:700}
+.dark .prose strong{color:var(--canvas)}
+.light .prose strong,.warm .prose strong{color:var(--ink)}
+.prose em{font-style:italic}
+.prose .highlight{color:var(--ember);font-weight:700}
+.prose .callout{font-family:'Playfair Display',serif;font-size:22px;font-style:italic;color:var(--ember);line-height:1.5;margin:36px 0;padding-left:24px;border-left:3px solid var(--ember)}
+.prose .big-quote{font-family:'Playfair Display',serif;font-size:clamp(24px,3vw,32px);font-weight:400;font-style:italic;line-height:1.5;margin:40px 0;text-align:center}
+.dark .prose .big-quote{color:var(--canvas)}
+.prose .big-quote strong{color:var(--ember);font-weight:700;font-style:normal}
+.prose ul,.prose ol{padding-left:24px;margin-bottom:24px}
+.prose li{margin-bottom:12px;line-height:1.6}
+.prose li strong{color:var(--ink)}
+.dark .prose li strong{color:var(--canvas)}
+
+/* ===== NUMBERED LIST ===== */
+.num-list{list-style:none;padding:0;counter-reset:nl}
+.num-list li{counter-increment:nl;padding-left:48px;position:relative;margin-bottom:28px}
+.num-list li::before{content:counter(nl);position:absolute;left:0;top:-2px;font-size:32px;font-weight:900;color:var(--ember);opacity:.3;font-family:'Playfair Display',serif}
+
+/* ===== CARDS ===== */
+.card-grid{display:grid;gap:20px;margin:32px 0}
+.card-grid.c2{grid-template-columns:1fr 1fr}
+.card-grid.c3{grid-template-columns:1fr 1fr 1fr}
+.card-grid.c4{grid-template-columns:1fr 1fr 1fr 1fr}
+@media(max-width:768px){.card-grid.c2,.card-grid.c3,.card-grid.c4{grid-template-columns:1fr}}
+.card{border-radius:14px;padding:28px 24px}
+.card-dark{background:var(--glass2);border:1px solid rgba(255,255,255,.06)}
+.card-light{background:var(--white);box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.card h3{font-size:17px;font-weight:700;margin-bottom:8px}
+.card-dark h3{color:var(--canvas)}
+.card-light h3{color:var(--ink)}
+.card p{font-size:14px;line-height:1.6}
+.card-dark p{color:var(--stone)}
+.card-light p{color:var(--slate)}
+.card .card-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ember);margin-bottom:10px}
+.card .card-ital{font-size:13px;font-style:italic;color:var(--stone);margin-top:12px;line-height:1.5}
+
+/* ===== TABLES ===== */
+.tbl-wrap{overflow-x:auto;margin:28px 0;border-radius:14px;border:1px solid rgba(255,255,255,.06)}
+.light .tbl-wrap,.warm .tbl-wrap{border:1px solid #e8e4db}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:var(--ink);color:var(--canvas);padding:14px 16px;text-align:left;font-weight:600;letter-spacing:.3px;white-space:nowrap}
+.light th,.warm th{background:var(--ink)}
+td{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.06);color:var(--stone)}
+.light td,.warm td{border-bottom:1px solid #EFECE5;color:var(--slate)}
+tr:last-child td{border-bottom:none}
+td:first-child{font-weight:600}
+.light td:first-child,.warm td:first-child{color:var(--ink)}
+.dark td:first-child{color:var(--canvas)}
+.check{color:var(--ember);font-weight:800;font-size:15px}
+.cross{color:#666}
+.aev-col{color:var(--ember) !important;font-weight:700 !important}
+.aev-row td{background:var(--warm) !important;color:var(--ink) !important}
+
+/* ===== CODE / PL CARDS ===== */
+.pl-card{background:var(--glass2);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:28px 32px;margin:28px 0;font-family:'Inter',monospace;font-size:14px;line-height:1.8;color:var(--stone);white-space:pre-wrap}
+.light .pl-card,.warm .pl-card{background:var(--ink);color:var(--stone)}
+.pl-card .em{color:var(--ember);font-weight:700}
+.pl-card .wh{color:var(--canvas)}
+
+/* ===== FLOW CARD ===== */
+.flow{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;padding:20px;background:var(--glass2);border:1px solid rgba(255,255,255,.06);border-radius:12px;margin:28px 0;font-size:14px;font-weight:500;color:var(--stone);text-align:center}
+.light .flow,.warm .flow{background:var(--ink);color:var(--stone)}
+.flow .arr{color:var(--ember);font-weight:800;font-size:16px}
+
+/* ===== STAT ROW ===== */
+.stat-row{display:flex;gap:20px;margin:32px 0;flex-wrap:wrap}
+.stat{flex:1;min-width:120px;text-align:center;padding:20px;border-radius:12px}
+.dark .stat{background:var(--glass2);border:1px solid rgba(255,255,255,.06)}
+.light .stat,.warm .stat{background:var(--white);box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.stat .val{font-size:28px;font-weight:900;color:var(--ember)}
+.stat .lbl{font-size:11px;color:var(--stone);margin-top:4px;line-height:1.3}
+
+/* ===== TEAM ===== */
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin:32px 0}
+@media(max-width:768px){.team-grid{grid-template-columns:1fr 1fr}}
+.t-card{background:var(--glass2);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:28px 20px;text-align:center}
+.t-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--ember),#e8734a);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:22px;font-weight:900;color:var(--canvas)}
+.t-card h3{font-size:17px;font-weight:700;color:var(--canvas);margin-bottom:2px}
+.t-card .role{font-size:11px;color:var(--ember);font-weight:600;margin-bottom:12px;letter-spacing:.5px}
+.t-card p{font-size:12px;color:var(--stone);line-height:1.5;text-align:left}
+
+/* ===== VISION STEPS ===== */
+.v-step{position:relative;padding-left:32px;margin-bottom:36px}
+.v-step::before{content:'';position:absolute;left:0;top:8px;width:12px;height:12px;border-radius:50%;background:var(--ember)}
+.v-step::after{content:'';position:absolute;left:5px;top:24px;width:2px;height:calc(100% + 12px);background:rgba(255,255,255,.08)}
+.v-step:last-child::after{display:none}
+.v-step .time{font-size:11px;color:var(--ember);font-weight:700;letter-spacing:1px;margin-bottom:2px}
+.v-step h4{font-size:16px;font-weight:700;color:var(--canvas);margin-bottom:4px}
+.v-step p{font-size:14px;color:var(--stone);line-height:1.5}
+
+/* ===== ENDGAME ===== */
+.endgame{text-align:center;padding:80px 32px;
+  background-image:radial-gradient(ellipse 800px 400px at 50% 55%,rgba(212,87,42,.06) 0%,transparent 70%)}
+.endgame .lines{font-family:'Playfair Display',serif;font-size:clamp(20px,2.5vw,28px);font-weight:400;color:var(--canvas);line-height:2;margin-bottom:48px}
+.endgame .lines strong{color:var(--ember);font-weight:700}
+.endgame .brand{font-size:56px;font-weight:900;color:var(--canvas);letter-spacing:.1em}
+.endgame .sub{font-size:13px;color:var(--stone);letter-spacing:4px;margin-top:12px;text-transform:uppercase}
+
+/* ===== MISC ===== */
+.mb-0{margin-bottom:0}.mt-16{margin-top:16px}.mt-32{margin-top:32px}.mt-48{margin-top:48px}
+.accent{color:var(--ember)}
+.sep{width:60px;height:2px;background:var(--ember);margin:48px 0}
+.dark .sep{opacity:.6}
+hr{border:none;border-top:1px solid rgba(255,255,255,.06);margin:48px 0}
+.light hr,.warm hr{border-top:1px solid #e8e4db}
+.sub-head{font-size:20px;font-weight:700;margin:36px 0 16px}
+.dark .sub-head{color:var(--canvas)}
+
+/* ===== SCROLL REVEAL ===== */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-corner tl"></div>
+  <div class="hero-corner br"></div>
+  <div class="brand">Aev</div>
+  <div class="tagline">Performance Wellness</div>
+  <div class="divider"></div>
+  <div class="liner">A total AI-driven wellness platform disguised as a tin of candy &mdash; nano-sized supplements powered by AI marketing, rooted in Eastern medicine, built for the generation that wants control over what goes into their body.</div>
+  <div class="conf">Confidential</div>
+  <div class="date">April 2026</div>
+</section>
+
+<!-- PROBLEM -->
+<section class="section dark">
+  <div class="container reveal">
+    <div class="sec-label">The Problem</div>
+    <div class="sec-title">A $300 billion market<br>built on a <em>lie</em></div>
+    <div class="prose">
+      <div class="card-grid c2">
+        <div class="card card-dark">
+          <h3>The Blend Trap</h3>
+          <p>Pre-workouts, multivitamins, greens powders &mdash; they all promise everything in one scoop. But &ldquo;proprietary blend&rdquo; is code for &ldquo;we won&rsquo;t tell you how much.&rdquo; You&rsquo;re paying for a mystery box.</p>
+        </div>
+        <div class="card card-dark">
+          <h3>Stuck in the 90s</h3>
+          <p>Powders need shakers and water. Capsules feel like medicine. Even gummies are big, sticky, and come in bulky bottles. Nothing fits in your pocket. Nothing fits in your life.</p>
+        </div>
+        <div class="card card-dark">
+          <h3>Broken Economics</h3>
+          <p>DTC brands spend 40-60% of revenue on customer acquisition. The brands that win aren&rsquo;t the ones with the best product &mdash; they&rsquo;re the ones that can outspend on ads. That&rsquo;s an arbitrage machine, not a health company.</p>
+        </div>
+        <div class="card card-dark">
+          <h3>Red Ocean</h3>
+          <p>Create Wellness opened the creatine gummy category. Now everyone has piled in &mdash; Optimum Nutrition, Bounce, Bear Balanced, Legion, Swoly, ESN. The gummy format is already commoditizing.</p>
+        </div>
+      </div>
+      <p class="big-quote">The next winner won&rsquo;t be another creatine gummy brand.<br>It will be something <strong>different entirely.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- INSIGHT -->
+<section class="section light">
+  <div class="container reveal">
+    <div class="sec-label">The Insight</div>
+    <div class="sec-title">We&rsquo;ve seen this <em>movie before</em></div>
+    <div class="prose">
+      <p>Apple cider vinegar was one of the most validated natural health products in the world. People knew it worked. But drinking it was disgusting. Then <strong>Goli</strong> put it in a gummy and built a <strong class="accent">$430M revenue brand</strong> in two years.</p>
+      <p>Our CSO Ian Park was on the Goli investment team at VMG Partners (which invested $20M). We saw firsthand what happens when you change the form factor of a proven ingredient. <strong>You don&rsquo;t need to prove the science. You just need to make it easy.</strong></p>
+      <div class="callout">The battle has shifted from efficacy to experience. The question isn&rsquo;t &ldquo;does it work?&rdquo; It&rsquo;s &ldquo;how do I want to take it?&rdquo;</div>
+      <p>Gummies were the first answer. But gummies have their own problems:</p>
+      <ol class="num-list">
+        <li><strong>They get sticky.</strong> Heat, humidity, time &mdash; gummies degrade.</li>
+        <li><strong>They&rsquo;re heavy and large to carry.</strong> Big bottles don&rsquo;t fit in your pocket.</li>
+        <li><strong>They aren&rsquo;t clean to eat.</strong> Residue on fingers. Not discreet.</li>
+      </ol>
+      <p>Now think about <strong>Tic Tac</strong>. Easy to carry. Fun to eat. Clean to use. <strong class="accent">What if supplements felt like that?</strong></p>
+    </div>
+
+    <hr>
+
+    <div class="sec-title mt-32">Four core <em>insights</em></div>
+    <div class="card-grid c2">
+      <div class="card card-light">
+        <div class="card-label">Insight 01</div>
+        <h3>Deconstruct, don&rsquo;t blend</h3>
+        <p>Serious athletes already stack single ingredients. The problem is it&rsquo;s only available in powder tubs. What if stacking was as easy as popping a Tic Tac?</p>
+      </div>
+      <div class="card card-light">
+        <div class="card-label">Insight 02</div>
+        <h3>The form factor revolution is barely started</h3>
+        <p>Gummies, gum, beadlets, films, tabs &mdash; nobody has combined nano form factor with supplement-grade dosing in a format you enjoy eating. That&rsquo;s the gap.</p>
+      </div>
+      <div class="card card-light">
+        <div class="card-label">Insight 03</div>
+        <h3>East meets West</h3>
+        <p>Traditional Asian medicine formulas have never been made accessible in modern formats. Our CEO co-founded one of the top 4 Chinese medical schools in the US. K-wellness is the next K-beauty.</p>
+      </div>
+      <div class="card card-light">
+        <div class="card-label">Insight 04</div>
+        <h3>Own the marketing engine</h3>
+        <p>The brands that win will crack AI-native marketing &mdash; creative at scale, real-time optimization, automated influencer ops. We&rsquo;re building that engine. Aev is the first brand to prove it works.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="section dark">
+  <div class="container reveal">
+    <div class="sec-label">The Solution</div>
+    <div class="sec-title">Tic Tac meets <em>creatine</em></div>
+    <div class="prose">
+      <p>Aev makes nano-sized functional candies in pocket-sized tin cases. Each piece is tiny &mdash; like candy pearls or breath mints. Not a big gummy. Not a horse pill. A micro candy you pop without thinking.</p>
+    </div>
+    <div class="card-grid c3 mt-32">
+      <div class="card card-dark">
+        <div class="card-label">Nano</div>
+        <h3>Tiny form factor</h3>
+        <p>Five pieces of creatine a day? That&rsquo;s five seconds. Less effort than opening a water bottle.</p>
+      </div>
+      <div class="card card-dark">
+        <div class="card-label">Single-Ingredient</div>
+        <h3>One tin = one ingredient</h3>
+        <p>No blends. No fillers. Transparent dose. Your stack is however many tins you carry.</p>
+      </div>
+      <div class="card card-dark">
+        <div class="card-label">Tin Case</div>
+        <h3>Pocket-sized</h3>
+        <p>Like the mint tins you already carry. Visible, shareable. Every pull is a brand moment.</p>
+      </div>
+    </div>
+    <div class="card-grid c3 mt-16">
+      <div class="card card-dark">
+        <div class="card-label">Stacking</div>
+        <h3>Your protocol</h3>
+        <p>The Lego of supplements. Modular, personal, endlessly configurable.</p>
+      </div>
+      <div class="card card-dark">
+        <div class="card-label">30-Day</div>
+        <h3>Standardized supply</h3>
+        <p>Every SKU = 30-day supply. No mismatched refill cycles. Reorder once.</p>
+      </div>
+      <div class="card card-dark">
+        <div class="card-label">Personal</div>
+        <h3>Custom dosage</h3>
+        <p>&ldquo;3g creatine, 200mg caffeine.&rdquo; We ship your 30-day combo tailored to your protocol.</p>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="sub-head mt-32">Drop Culture &mdash; Tribe &amp; Identity</div>
+    <div class="prose">
+      <p>The carrying case is just the start. Aev builds a <strong>drop culture ecosystem</strong> &mdash; not just accessories, but a full fandom product line:</p>
+    </div>
+    <div class="card-grid c3 mt-16">
+      <div class="card card-dark">
+        <div class="card-label">Cases</div>
+        <h3>Carrying Cases</h3>
+        <p>Limited edition collabs with fitness influencers, K-pop artists, athletes, designers. Seasonal colorways, premium materials.</p>
+      </div>
+      <div class="card card-dark">
+        <div class="card-label">Apparel</div>
+        <h3>Streetwear Drops</h3>
+        <p>Hoodies, caps, gym wear. Not merch &mdash; streetwear. The kind of drops people line up for.</p>
+      </div>
+      <div class="card card-dark">
+        <div class="card-label">Fandom</div>
+        <h3>Community Products</h3>
+        <p>Stickers, shaker bottles, gym towels, travel kits. Identity items that signal which crew you&rsquo;re in.</p>
+      </div>
+    </div>
+    <div class="card-grid c2 mt-16">
+      <div class="card card-dark">
+        <div class="card-label">Collabs</div>
+        <h3>Artist &times; Aev</h3>
+        <p>Curated stacks with custom packaging. Gym &times; Aev, Gamer &times; Aev, K-pop &times; Aev editions.</p>
+      </div>
+      <div class="card card-dark">
+        <div class="card-label">Gifting</div>
+        <h3>Premium Unboxing</h3>
+        <p>Case + three tins + hoodie. Beats any supplement gift box on the market.</p>
+      </div>
+    </div>
+    <div class="prose mt-32">
+      <p class="big-quote" style="color:var(--canvas)"><strong>Aev isn&rsquo;t a supplement brand.<br>It&rsquo;s a tribe and a culture.</strong><br><span style="font-size:18px;color:var(--stone)">The supplements are the entry point. The drops build identity.<br>The community creates belonging.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT -->
+<section class="section warm">
+  <div class="container reveal">
+    <div class="sec-label">Product</div>
+    <div class="sec-title">Core <em>Line-up</em></div>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>SKU</th><th>Ingredient</th><th>Per Piece</th><th>Daily Dose</th><th>Category</th></tr>
+        <tr><td>Aev Cr</td><td>Creatine Monohydrate</td><td>1g</td><td>5 pieces = 5g</td><td>Muscle, Brain, Recovery</td></tr>
+        <tr><td>Aev Ba</td><td>Beta-Alanine</td><td>800mg</td><td>4 pieces = 3.2g</td><td>Endurance, Power</td></tr>
+        <tr><td>Aev C</td><td>Caffeine</td><td>100mg</td><td>1-3 pieces</td><td>Energy, Focus</td></tr>
+      </table>
+    </div>
+    <div class="prose">
+      <p><strong>Creatine</strong> &mdash; 700+ peer-reviewed studies. The most validated performance supplement in existence.<br>
+      <strong>Beta-Alanine</strong> &mdash; Proven carnosine buffer. Endorsed by ISSN.<br>
+      <strong>Caffeine</strong> &mdash; Precise dosing replaces the guesswork of coffee.</p>
+    </div>
+    <div class="card-grid c2 mt-32">
+      <div class="card card-light">
+        <div class="card-label">Performance Line</div>
+        <h3>Expansion SKUs</h3>
+        <p>L-Theanine, Electrolytes, Glycerol, Collagen &mdash; proven sports/wellness ingredients.</p>
+      </div>
+      <div class="card card-light">
+        <div class="card-label">Heritage Line</div>
+        <h3>Asian Medicine Formulas</h3>
+        <p>Adaptogenic blends, herbal combos, functional mushrooms &mdash; developed with our network of Oriental medicine practitioners. K-wellness meets Tic Tac.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY NANO -->
+<section class="section dark">
+  <div class="container reveal">
+    <div class="sec-label">Why Nano Wins</div>
+    <div class="sec-title">The form factor <em>evolution</em></div>
+    <div class="flow">
+      <span>Powder (1990s)</span><span class="arr">&rarr;</span>
+      <span>Capsule (2000s)</span><span class="arr">&rarr;</span>
+      <span>Gummy (2020s)</span><span class="arr">&rarr;</span>
+      <span style="color:var(--ember);font-weight:800">Nano Candy (Now)</span>
+    </div>
+    <div class="tbl-wrap mt-32">
+      <table>
+        <tr><th>Generation</th><th>Solved</th><th>Still Broken</th></tr>
+        <tr><td>Powder</td><td>High dose possible</td><td>Needs water, shaker, prep time</td></tr>
+        <tr><td>Capsule</td><td>Portable, precise</td><td>Hard to swallow, feels medical</td></tr>
+        <tr><td>Gummy</td><td>Tastes good, enjoyable</td><td>Big, bulky bottle, low dose</td></tr>
+        <tr><td style="color:var(--ember);font-weight:800">Nano Candy</td><td style="color:var(--ember);font-weight:700">All of the above</td><td style="color:var(--ember)">&mdash;</td></tr>
+      </table>
+    </div>
+    <div class="tbl-wrap mt-32">
+      <table>
+        <tr><th></th><th>Create (Gummy)</th><th>Neuro (Mint)</th><th>BodyTech (Beadlet)</th><th class="aev-col">Aev (Nano)</th></tr>
+        <tr><td>Size</td><td>Large</td><td>Small</td><td>Nano (in capsule)</td><td class="aev-col">Nano (standalone)</td></tr>
+        <tr><td>Packaging</td><td>Bottle/Pouch</td><td>Tin can</td><td>Bottle</td><td class="aev-col">Tin case</td></tr>
+        <tr><td>Dose/piece</td><td>1.5g</td><td>40mg caffeine</td><td>Varies</td><td class="aev-col">1g creatine / 100mg caffeine</td></tr>
+        <tr><td>Enjoyable</td><td>Yes</td><td>Yes</td><td>No (swallow)</td><td class="aev-col">Yes</td></tr>
+        <tr><td>Pocketable</td><td>No</td><td>Yes</td><td>No</td><td class="aev-col">Yes</td></tr>
+        <tr><td>Supplement-grade</td><td>Yes</td><td>No (low dose)</td><td>Yes</td><td class="aev-col">Yes</td></tr>
+      </table>
+    </div>
+    <p class="big-quote mt-48" style="color:var(--canvas)">The first brand to deliver supplement-grade dosing<br>in a nano form factor you <strong>actually enjoy.</strong></p>
+  </div>
+</section>
+
+<!-- COMPETITIVE LANDSCAPE -->
+<section class="section light">
+  <div class="container wide reveal">
+    <div class="sec-label">Competitive Landscape</div>
+    <div class="sec-title">Red ocean vs. <em>blue ocean</em></div>
+
+    <div class="sub-head">The form factor precedent</div>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>Company</th><th>Innovation</th><th>Peak Revenue</th><th>Outcome</th></tr>
+        <tr><td>Goli</td><td>ACV liquid &rarr; ACV gummy</td><td>$430M (2021)</td><td>Creditor administration. $20M write-off.</td></tr>
+        <tr><td>Create</td><td>Creatine powder &rarr; Creatine gummy</td><td>$15M+ cumulative</td><td>$25M raised. Nationwide retail. Growing.</td></tr>
+        <tr><td>Neuro</td><td>Caffeine pill &rarr; Mint/gum in tin</td><td>$120M projected (2026)</td><td>$100-120M valuation. Scaled.</td></tr>
+      </table>
+    </div>
+    <div class="prose"><p class="callout">Change the form factor of a proven ingredient, and you unlock a massive market. But without the right unit economics, even $430M in revenue can collapse.</p></div>
+
+    <div class="sub-head">Direct competitors</div>
+    <div class="card-grid c3">
+      <div class="card card-light">
+        <div class="card-label">Create Wellness</div>
+        <h3>Creatine gummy creator</h3>
+        <p>$25M+ raised. 250M+ gummies. Target/Sprouts/GNC nationwide. 50%+ female customers. AG1, Vital Proteins execs hired.</p>
+        <p class="card-ital">Aev&rsquo;s take: They proved the market. But gummy in a bottle &mdash; big, sticky, no stacking, no AI. We&rsquo;re building the next category.</p>
+      </div>
+      <div class="card card-light">
+        <div class="card-label">Noon World</div>
+        <h3>Asian wellness branding</h3>
+        <p>Mushroom gummies. Dual-layer patent tech. Walmart 104 stores. &ldquo;Lab meets lifestyle.&rdquo; Neuroscience PhD co-founder.</p>
+        <p class="card-ital">Aev&rsquo;s take: Opened the door for Eastern ingredients. We share the heritage angle &mdash; ours goes deeper with our CEO&rsquo;s medical network.</p>
+      </div>
+      <div class="card card-light">
+        <div class="card-label">Neuro Gum</div>
+        <h3>Tin can form factor proof</h3>
+        <p>$120M projected 2026. $100-120M valuation. Caffeine 40mg gum/mints in tin cans. Amazon $2.2M+/mo.</p>
+        <p class="card-ital">Aev&rsquo;s take: Proved tin cans scale to $100M+. But low dosing. We deliver supplement-grade doses in a similar format.</p>
+      </div>
+    </div>
+
+    <div class="sub-head mt-48">The gummy red ocean</div>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>Brand</th><th>What</th><th>Status</th></tr>
+        <tr><td>Optimum Nutrition</td><td>#1 US creatine brand. 5g gummies (2026).</td><td>800-lb gorilla entering.</td></tr>
+        <tr><td>Bounce Nutrition</td><td>6g/serving vegan creatine gummies.</td><td>7-figure revenue year one.</td></tr>
+        <tr><td>Bear Balanced</td><td>Creatine 3g + nootropic blend.</td><td>Closest to stacking, but it&rsquo;s a blend.</td></tr>
+        <tr><td>Legion</td><td>Premium transparent creatine gummies.</td><td>$1.33/serving. Transparency play.</td></tr>
+        <tr><td>Swoly</td><td>Budget creatine gummies 4g.</td><td>$1.26/serving. Price play.</td></tr>
+        <tr><td>ESN</td><td>European. 3.4g creatine gummies.</td><td>UK launch 2025.</td></tr>
+        <tr><td>TopGum</td><td>B2B manufacturer. White-label.</td><td>Supplying at scale.</td></tr>
+      </table>
+    </div>
+    <div class="prose"><p class="callout">You don&rsquo;t win by being the 8th creatine gummy. You win by being the 1st nano candy.</p></div>
+
+    <div class="sub-head mt-48">The competitive matrix</div>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>Feature</th><th>Create</th><th>Noon</th><th>Neuro</th><th>ON</th><th>Tabs</th><th style="color:var(--ember)">Aev</th></tr>
+        <tr><td>Nano form factor</td><td class="cross">&times;</td><td class="cross">&times;</td><td>~</td><td class="cross">&times;</td><td>~</td><td class="check">&check;</td></tr>
+        <tr><td>Supplement-grade dose</td><td class="check">&check;</td><td class="check">&check;</td><td class="cross">&times;</td><td class="check">&check;</td><td class="cross">&times;</td><td class="check">&check;</td></tr>
+        <tr><td>Single-ingredient</td><td class="check">&check;</td><td class="cross">&times;</td><td class="cross">&times;</td><td class="check">&check;</td><td class="cross">&times;</td><td class="check">&check;</td></tr>
+        <tr><td>Multi-SKU stacking</td><td class="cross">&times;</td><td class="cross">&times;</td><td class="cross">&times;</td><td class="cross">&times;</td><td class="cross">&times;</td><td class="check">&check;</td></tr>
+        <tr><td>Pocketable tin case</td><td class="cross">&times;</td><td class="cross">&times;</td><td class="check">&check;</td><td class="cross">&times;</td><td class="cross">&times;</td><td class="check">&check;</td></tr>
+        <tr><td>Personal dosage</td><td class="cross">&times;</td><td class="cross">&times;</td><td class="cross">&times;</td><td class="cross">&times;</td><td class="cross">&times;</td><td class="check">&check;</td></tr>
+        <tr><td>AI marketing engine</td><td class="cross">&times;</td><td class="cross">&times;</td><td class="cross">&times;</td><td class="cross">&times;</td><td class="cross">&times;</td><td class="check">&check;</td></tr>
+        <tr><td>Asian heritage formulas</td><td class="cross">&times;</td><td class="check">&check;</td><td class="cross">&times;</td><td class="cross">&times;</td><td class="cross">&times;</td><td class="check">&check;</td></tr>
+        <tr><td>$0 marketing model</td><td class="cross">&times;</td><td>~</td><td class="cross">&times;</td><td class="cross">&times;</td><td class="check">&check;</td><td class="check">&check;</td></tr>
+      </table>
+    </div>
+    <p class="big-quote mt-32" style="color:var(--ink)">No existing brand checks more than 3 boxes.<br><strong>Aev checks all 9.</strong></p>
+  </div>
+</section>
+
+<!-- AI ENGINE -->
+<section class="section ink2">
+  <div class="container reveal">
+    <div class="sec-label">Backend</div>
+    <div class="sec-title">The AI marketing <em>engine</em></div>
+    <div class="prose">
+      <p>Aev is a wellness brand on the frontend. On the backend, it&rsquo;s an <strong>AI marketing company.</strong></p>
+      <p><strong class="accent">The goal: spend zero on traditional marketing.</strong> Not &ldquo;low.&rdquo; Zero.</p>
+    </div>
+    <ol class="num-list mt-32" style="color:var(--stone)">
+      <li><strong style="color:var(--canvas)">Built-in distribution.</strong> CSO has 11,000+ newsletter subscribers, established social presence, and deep networks across Silicon Valley, Korea, and the VC ecosystem.</li>
+      <li><strong style="color:var(--canvas)">Social-native team.</strong> Content creation, community building, and network effects are core competencies, not outsourced functions.</li>
+      <li><strong style="color:var(--canvas)">AI replaces the agency.</strong> Instead of 40% to agencies, the in-house AI engine generates creative, optimizes spend, and runs campaigns at a fraction of the cost.</li>
+      <li><strong style="color:var(--canvas)">The product IS the marketing.</strong> A nano candy in a beautiful tin case. The carrying case you flex. The collab drops. The format generates organic content.</li>
+    </ol>
+
+    <div class="tbl-wrap mt-32">
+      <table>
+        <tr><th></th><th>Traditional Brand</th><th style="color:var(--ember)">Aev</th></tr>
+        <tr><td>Marketing spend</td><td>40-60% of revenue (external)</td><td class="aev-col">15-25% (in-house AI)</td></tr>
+        <tr><td>Scale behavior</td><td>Cost grows with revenue</td><td class="aev-col">Semi-fixed; % drops as revenue grows</td></tr>
+        <tr><td>Creative production</td><td>Slow, expensive, agency-dependent</td><td class="aev-col">AI-generated at scale, real-time</td></tr>
+        <tr><td>Data ownership</td><td>Agency owns the learnings</td><td class="aev-col">Aev owns everything</td></tr>
+        <tr><td>Multi-brand potential</td><td>None</td><td class="aev-col">Same engine powers new sectors</td></tr>
+      </table>
+    </div>
+
+    <div class="sub-head mt-48" style="color:var(--canvas)">The Flywheel</div>
+    <div class="flow">
+      <span>Sales data</span><span class="arr">&rarr;</span>
+      <span>AI learns</span><span class="arr">&rarr;</span>
+      <span>Better creative</span><span class="arr">&rarr;</span>
+      <span>Lower CAC</span><span class="arr">&rarr;</span>
+      <span>Higher margins</span><span class="arr">&rarr;</span>
+      <span>Reinvest</span><span class="arr">&rarr;</span>
+      <span>More data</span><span class="arr">&rarr;</span>
+      <span style="color:var(--ember)">Repeat</span>
+    </div>
+  </div>
+</section>
+
+<!-- UNIT ECONOMICS -->
+<section class="section light">
+  <div class="container reveal">
+    <div class="sec-label">Unit Economics</div>
+    <div class="sec-title">Why Aev isn&rsquo;t a <em>supplement company</em></div>
+    <div class="card-grid c2">
+      <div class="card card-light" style="border:2px solid #e8e4db">
+        <div class="card-label">Traditional Brand</div>
+        <div class="pl-card" style="background:var(--canvas);color:var(--slate);border:1px solid #e8e4db">Revenue:                    $100
+  COGS:                     -$30    (30%)
+  Marketing (external):     -$45    (45%)
+  Operations:               -$15    (15%)
+  ────────────────────────────
+  <span style="font-weight:800;color:var(--ink)">Net margin:                $10    (10%)</span></div>
+      </div>
+      <div class="card card-light" style="border:2px solid var(--ember)">
+        <div class="card-label">Aev (Target)</div>
+        <div class="pl-card" style="background:var(--ink);color:var(--stone)">Revenue:                    $100
+  COGS:                     -$25    (25%)
+  Marketing (in-house AI):  -$10    (10%)
+  Operations:               -$15    (15%)
+  ────────────────────────────
+  <span style="font-weight:800;color:var(--ember)">Net margin:                $50    (50%)</span></div>
+      </div>
+    </div>
+    <p class="big-quote mt-32" style="color:var(--ink)">The difference is <strong>40 points of margin.</strong><br>That&rsquo;s not an optimization. That&rsquo;s a different business model.</p>
+    <div class="prose">
+      <p class="callout">Revenue without margin is a treadmill, not a business. &mdash; CSO Ian Park was on the Goli investment team at VMG. He watched a $430M-revenue brand collapse. That was a $20M write-off burned into our DNA.</p>
+    </div>
+    <div class="sub-head">Customer Journey</div>
+    <div class="flow" style="background:var(--ink)">
+      <span>Try (1 tin)</span><span class="arr">&rarr;</span>
+      <span>Stack (2-4 tins)</span><span class="arr">&rarr;</span>
+      <span>Combo (30-day)</span><span class="arr">&rarr;</span>
+      <span>Personal Dosage</span><span class="arr">&rarr;</span>
+      <span style="color:var(--ember)">Carrying Case</span>
+    </div>
+    <div class="stat-row mt-32">
+      <div class="stat"><div class="val">70%+</div><div class="lbl">Gross Margin</div></div>
+      <div class="stat"><div class="val">30-40%</div><div class="lbl">Lower CAC vs Industry</div></div>
+      <div class="stat"><div class="val">4x+</div><div class="lbl">LTV/CAC Target</div></div>
+      <div class="stat"><div class="val">&lt;5%</div><div class="lbl">Monthly Churn Target</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARKET -->
+<section class="section dark">
+  <div class="container reveal">
+    <div class="sec-label">Market</div>
+    <div class="sec-title">Riding a <em>$300B+</em> wave</div>
+    <div class="stat-row">
+      <div class="stat"><div class="val">$308B</div><div class="lbl">Global Supplements (2028E)</div></div>
+      <div class="stat"><div class="val">$7.5B</div><div class="lbl">US Gummy/Candy Segment (2027E)</div></div>
+      <div class="stat"><div class="val">40%+</div><div class="lbl">Creatine Gummy YoY Growth</div></div>
+      <div class="stat"><div class="val">73%</div><div class="lbl">Gen Z Prefer Gummy Format</div></div>
+    </div>
+    <div class="tbl-wrap mt-48">
+      <table>
+        <tr><th>Company</th><th>What</th><th>Funding / Valuation</th><th>Key Metric</th></tr>
+        <tr><td>Goli</td><td>ACV gummies</td><td>$20M from VMG</td><td>$430M rev. The precedent.</td></tr>
+        <tr><td>Create</td><td>Creatine gummies</td><td>$25M+ raised</td><td>250M+ gummies. Profitable early.</td></tr>
+        <tr><td>Gr&uuml;ns</td><td>All-in-one gummy vitamin</td><td>$500M valuation</td><td>9-figure ARR. 4M gummies/day.</td></tr>
+        <tr><td>Neuro</td><td>Functional gum/mints</td><td>$100-120M valuation</td><td>$120M projected 2026.</td></tr>
+        <tr><td>AG1</td><td>Greens blend</td><td>$6B+ valuation</td><td>$600M+ ARR.</td></tr>
+        <tr><td>OLLY</td><td>Gummy vitamins</td><td>Acquired ~$500M+</td><td>Exit precedent (Unilever).</td></tr>
+        <tr><td>Tabs</td><td>Functional chocolate/tabs</td><td>$0 funding</td><td>$11M rev. 100% organic.</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="section ink2">
+  <div class="container wide reveal">
+    <div class="sec-label">Team</div>
+    <div class="sec-title">Built to <em>execute</em></div>
+    <div class="team-grid">
+      <div class="t-card">
+        <div class="t-avatar">B</div>
+        <h3>Byung</h3>
+        <div class="role">CEO &middot; 40%</div>
+        <p>Co-founder of one of the top 4 Chinese medical schools in the US. Deep practitioner network nationwide. Manufacturing secured through patented partners. Samples produced. Bridges traditional Asian medicine with modern product innovation.</p>
+      </div>
+      <div class="t-card">
+        <div class="t-avatar">W</div>
+        <h3>Will</h3>
+        <div class="role">CTO &middot; 30%</div>
+        <p>Chinese/HK background. AI marketing engine architect. Creative automation, performance optimization, data infrastructure. Deep technical expertise spanning AI and engineering.</p>
+      </div>
+      <div class="t-card">
+        <div class="t-avatar">IP</div>
+        <h3>Ian Park</h3>
+        <div class="role">CSO &middot; 30%</div>
+        <p>Silicon Valley VC, 10yr LP+GP experience. McKinsey &rarr; KIC &rarr; multiple funds. Founder, Ian &amp; Partners. On Goli investment team at VMG. $20M write-off lesson. 11K+ newsletter. Brand strategy, fundraising.</p>
+      </div>
+      <div class="t-card">
+        <div class="t-avatar">?</div>
+        <h3>CMO</h3>
+        <div class="role">Onboarding</div>
+        <p>Veteran D2C operator with deep AI marketing experience. Initially advisory/fractional, transitioning to full-time. The person who turns the AI engine into revenue.</p>
+      </div>
+    </div>
+    <div class="stat-row mt-32">
+      <div class="stat"><div class="val" style="font-size:18px">Manufacturing</div><div class="lbl">Secured. Samples produced.</div></div>
+      <div class="stat"><div class="val" style="font-size:18px">Medicine Network</div><div class="lbl">Top-4 medical school. Nationwide.</div></div>
+      <div class="stat"><div class="val" style="font-size:18px">Goli Lesson</div><div class="lbl">$430M rev collapse &rarr; our DNA.</div></div>
+      <div class="stat"><div class="val" style="font-size:18px">East &times; West</div><div class="lbl">Team DNA = brand positioning.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- VISION -->
+<section class="section dark">
+  <div class="container reveal">
+    <div class="sec-label">Vision</div>
+    <div class="sec-title">The <em>roadmap</em></div>
+    <div class="v-step">
+      <div class="time">PHASE 1 &mdash; 2026</div>
+      <h4>Prove the product</h4>
+      <p>Launch 3 SKUs (Creatine, Beta-Alanine, Caffeine) in nano candy format. Build DTC engine with AI marketing v1. Prove consumers build stacks.</p>
+    </div>
+    <div class="v-step">
+      <div class="time">PHASE 2 &mdash; 2027</div>
+      <h4>Scale the brand</h4>
+      <p>Expand to retail &mdash; position next to mints, not supplement aisle. Enter Korea. Add new SKUs. Hit $100K+ MRR. Raise Series A.</p>
+    </div>
+    <div class="v-step">
+      <div class="time">PHASE 3 &mdash; 2028+</div>
+      <h4>Total wellness platform</h4>
+      <p>Format expansion: beauty, cognitive, sleep, gut health. Heritage line launch: traditional Asian medicine in nano candy. AI engine becomes a platform &mdash; license to other CPG brands.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY NOW -->
+<section class="section warm">
+  <div class="container reveal">
+    <div class="sec-label">Why Now</div>
+    <div class="sec-title">Five reasons this is <em>the moment</em></div>
+    <ol class="num-list" style="color:var(--slate)">
+      <li><strong style="color:var(--ink)">The gummy window is closing.</strong> ON, Bounce, Legion, ESN &mdash; the category is commoditizing in real time. The next form factor wave is starting. First movers define categories.</li>
+      <li><strong style="color:var(--ink)">AI marketing inflection.</strong> Generative AI has made content production 10x cheaper. The D2C playbook is being rewritten. Brands that build engines today will have structural advantages for years.</li>
+      <li><strong style="color:var(--ink)">Manufacturing is ready.</strong> Patented production capability secured. Samples produced. This isn&rsquo;t a concept &mdash; it&rsquo;s ready to execute.</li>
+      <li><strong style="color:var(--ink)">Creatine is the new vitamin D.</strong> Mainstream awareness exploding. Create proved women buy creatine. Cognitive benefits driving new demographics. TAM expanding every quarter.</li>
+      <li><strong style="color:var(--ink)">This team, this moment.</strong> An operator with manufacturing. An AI engineer. A VC with pattern recognition. A D2C veteran. All in the same room, skin in the game.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ENDGAME -->
+<section class="section dark endgame">
+  <div class="hero-corner tl" style="top:48px;left:56px"></div>
+  <div class="hero-corner br" style="bottom:48px;right:56px"></div>
+  <div class="lines">
+    Aev starts as a supplement company.<br>
+    It becomes a total <strong>wellness platform.</strong><br>
+    It ends as an <strong>AI marketing company</strong><br>
+    that happens to own wellness brands.<br><br>
+    The nano candy is the product.<br>
+    The brand is the <strong>trojan horse.</strong><br>
+    The engine is the <strong>empire.</strong>
+  </div>
+  <div class="brand">Aev</div>
+  <div class="sub">Your stack. Your way.</div>
+</section>
+
+<script>
+const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
