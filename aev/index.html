@@ -9,9 +9,11 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --canvas:#FFFAF5;--ink:#1E1E2A;--ember:#FF8C69;--slate:#6B7280;--stone:#A1A1AA;
+  --canvas:#FFF9F4;--ink:#1B1B2F;--ember:#FF7E5F;--slate:#5A6377;--stone:#9CA3AF;
   --white:#fff;--glass:rgba(255,255,255,.08);--glass2:rgba(255,255,255,.12);
-  --warm:#FFF7F0;--ink2:#2A2A3A;
+  --warm:#FFF3EC;--ink2:#252540;
+  --gradient-hero:radial-gradient(ellipse 900px 500px at 50% 55%,rgba(255,126,95,.1) 0%,rgba(254,180,123,.05) 30%,transparent 70%);
+  --gradient-accent:linear-gradient(135deg,#FF7E5F,#FEB47B);
 }
 html{scroll-behavior:smooth;font-size:16px}
 body{font-family:'Inter',sans-serif;background:var(--ink);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -19,7 +21,7 @@ body{font-family:'Inter',sans-serif;background:var(--ink);color:var(--ink);-webk
 
 /* ===== HERO ===== */
 .hero{min-height:100vh;background:var(--ink);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;
-  background-image:radial-gradient(ellipse 900px 500px at 50% 55%,rgba(212,87,42,.07) 0%,transparent 70%)}
+  background-image:var(--gradient-hero)}
 .hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h1v1H0z' fill='%23ffffff' fill-opacity='.015'/%3E%3C/svg%3E");pointer-events:none}
 .hero-corner{position:absolute;width:50px;height:50px}
 .hero-corner.tl{top:48px;left:56px;border-top:1px solid rgba(255,255,255,.08);border-left:1px solid rgba(255,255,255,.08)}
@@ -127,7 +129,7 @@ td:first-child{font-weight:600}
 .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin:32px 0}
 @media(max-width:768px){.team-grid{grid-template-columns:1fr 1fr}}
 .t-card{background:var(--glass2);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:28px 20px;text-align:center}
-.t-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--ember),#e8734a);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:22px;font-weight:900;color:var(--canvas)}
+.t-avatar{width:64px;height:64px;border-radius:50%;background:var(--gradient-accent);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:22px;font-weight:900;color:var(--canvas)}
 .t-card h3{font-size:17px;font-weight:700;color:var(--canvas);margin-bottom:2px}
 .t-card .role{font-size:11px;color:var(--ember);font-weight:600;margin-bottom:12px;letter-spacing:.5px}
 .t-card p{font-size:12px;color:var(--stone);line-height:1.5;text-align:left}
@@ -143,7 +145,7 @@ td:first-child{font-weight:600}
 
 /* ===== ENDGAME ===== */
 .endgame{text-align:center;padding:80px 32px;
-  background-image:radial-gradient(ellipse 800px 400px at 50% 55%,rgba(212,87,42,.06) 0%,transparent 70%)}
+  background-image:radial-gradient(ellipse 800px 400px at 50% 55%,rgba(255,126,95,.1) 0%,rgba(254,180,123,.05) 30%,transparent 70%)}
 .endgame .lines{font-family:'Playfair Display',serif;font-size:clamp(20px,2.5vw,28px);font-weight:400;color:var(--canvas);line-height:2;margin-bottom:48px}
 .endgame .lines strong{color:var(--ember);font-weight:700}
 .endgame .brand{font-size:56px;font-weight:900;color:var(--canvas);letter-spacing:.1em}
@@ -162,6 +164,32 @@ hr{border:none;border-top:1px solid rgba(255,255,255,.06);margin:48px 0}
 /* ===== SCROLL REVEAL ===== */
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}
 .reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ===== PRODUCT RENDER ===== */
+.product-render{display:flex;justify-content:center;gap:32px;margin:48px 0;flex-wrap:wrap}
+.tin{width:140px;perspective:600px}
+.tin-body{background:linear-gradient(145deg,#2a2a2a 0%,#1a1a1a 50%,#2a2a2a 100%);border-radius:16px;padding:16px 12px 20px;position:relative;box-shadow:0 8px 32px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.08);overflow:hidden}
+.tin-body::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent)}
+.tin-body::after{content:'';position:absolute;top:8px;left:50%;transform:translateX(-50%);width:40px;height:3px;border-radius:2px;background:rgba(255,255,255,.1)}
+.tin-window{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:10px;height:120px;margin:16px 0 12px;position:relative;overflow:hidden;display:flex;flex-wrap:wrap;align-content:flex-end;padding:8px;gap:3px;justify-content:center}
+.bead{width:10px;height:10px;border-radius:50%;opacity:.9;box-shadow:inset -1px -1px 2px rgba(0,0,0,.3),inset 1px 1px 2px rgba(255,255,255,.3)}
+.tin-cr .bead{background:linear-gradient(135deg,#f0f0f0,#d4d4d4)}
+.tin-ba .bead{background:linear-gradient(135deg,#FFD700,#DAA520)}
+.tin-c .bead{background:linear-gradient(135deg,#E8734A,#c45a35)}
+.tin-label{text-align:center}
+.tin-label .sym{font-size:24px;font-weight:900;color:var(--ember);letter-spacing:1px}
+.tin-label .name{font-size:9px;color:var(--stone);letter-spacing:2px;text-transform:uppercase;margin-top:2px}
+.tin-tag{text-align:center;margin-top:10px;font-size:10px;color:var(--stone);letter-spacing:1px}
+
+/* carrying case render */
+.case-render{display:flex;justify-content:center;margin:40px 0}
+.carry-case{background:linear-gradient(145deg,#333 0%,#1a1a1a 50%,#2a2a2a 100%);border-radius:20px;padding:20px 16px;display:flex;gap:12px;box-shadow:0 12px 48px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06);position:relative}
+.carry-case::before{content:'Aev';position:absolute;top:10px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:900;letter-spacing:4px;color:rgba(255,255,255,.08)}
+.carry-case .mini-tin{width:52px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:8px 6px;text-align:center}
+.carry-case .mini-window{height:48px;background:rgba(255,255,255,.04);border-radius:6px;margin-bottom:6px;display:flex;flex-wrap:wrap;align-content:flex-end;padding:4px;gap:2px;justify-content:center}
+.carry-case .mini-bead{width:5px;height:5px;border-radius:50%;opacity:.8}
+.carry-case .mini-label{font-size:8px;font-weight:800;letter-spacing:1px}
+.carry-case .cr-l{color:#d4d4d4}.carry-case .ba-l{color:#DAA520}.carry-case .c-l{color:var(--ember)}
 </style>
 </head>
 <body>
@@ -261,6 +289,77 @@ hr{border:none;border-top:1px solid rgba(255,255,255,.06);margin:48px 0}
     <div class="prose">
       <p>Aev makes nano-sized functional candies in pocket-sized tin cases. Each piece is tiny &mdash; like candy pearls or breath mints. Not a big gummy. Not a horse pill. A micro candy you pop without thinking.</p>
     </div>
+
+    <!-- Product Render -->
+    <div class="product-render">
+      <div class="tin">
+        <div class="tin-body tin-cr">
+          <div class="tin-window">
+            <span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span>
+            <span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span>
+            <span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span>
+            <span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span>
+          </div>
+          <div class="tin-label"><div class="sym">Cr</div><div class="name">Creatine</div></div>
+        </div>
+        <div class="tin-tag">1g / bead &middot; 5/day</div>
+      </div>
+      <div class="tin">
+        <div class="tin-body tin-ba">
+          <div class="tin-window">
+            <span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span>
+            <span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span>
+            <span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span>
+            <span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span>
+          </div>
+          <div class="tin-label"><div class="sym">Ba</div><div class="name">Beta-Alanine</div></div>
+        </div>
+        <div class="tin-tag">800mg / bead &middot; 4/day</div>
+      </div>
+      <div class="tin">
+        <div class="tin-body tin-c">
+          <div class="tin-window">
+            <span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span>
+            <span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span>
+            <span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span><span class="bead"></span>
+          </div>
+          <div class="tin-label"><div class="sym">C</div><div class="name">Caffeine</div></div>
+        </div>
+        <div class="tin-tag">100mg / bead &middot; 1-3/day</div>
+      </div>
+    </div>
+
+    <!-- Carrying Case Render -->
+    <div class="case-render">
+      <div class="carry-case">
+        <div class="mini-tin">
+          <div class="mini-window">
+            <span class="mini-bead" style="background:#d4d4d4"></span><span class="mini-bead" style="background:#e0e0e0"></span><span class="mini-bead" style="background:#ccc"></span><span class="mini-bead" style="background:#d4d4d4"></span><span class="mini-bead" style="background:#ddd"></span>
+            <span class="mini-bead" style="background:#d4d4d4"></span><span class="mini-bead" style="background:#ccc"></span><span class="mini-bead" style="background:#e0e0e0"></span><span class="mini-bead" style="background:#d4d4d4"></span><span class="mini-bead" style="background:#ddd"></span>
+            <span class="mini-bead" style="background:#ccc"></span><span class="mini-bead" style="background:#d4d4d4"></span><span class="mini-bead" style="background:#ddd"></span><span class="mini-bead" style="background:#e0e0e0"></span><span class="mini-bead" style="background:#d4d4d4"></span>
+          </div>
+          <div class="mini-label cr-l">Cr</div>
+        </div>
+        <div class="mini-tin">
+          <div class="mini-window">
+            <span class="mini-bead" style="background:#DAA520"></span><span class="mini-bead" style="background:#C5961C"></span><span class="mini-bead" style="background:#E0B530"></span><span class="mini-bead" style="background:#DAA520"></span><span class="mini-bead" style="background:#C5961C"></span>
+            <span class="mini-bead" style="background:#E0B530"></span><span class="mini-bead" style="background:#DAA520"></span><span class="mini-bead" style="background:#C5961C"></span><span class="mini-bead" style="background:#DAA520"></span><span class="mini-bead" style="background:#E0B530"></span>
+            <span class="mini-bead" style="background:#DAA520"></span><span class="mini-bead" style="background:#C5961C"></span><span class="mini-bead" style="background:#E0B530"></span><span class="mini-bead" style="background:#DAA520"></span><span class="mini-bead" style="background:#C5961C"></span>
+          </div>
+          <div class="mini-label ba-l">Ba</div>
+        </div>
+        <div class="mini-tin">
+          <div class="mini-window">
+            <span class="mini-bead" style="background:#E8734A"></span><span class="mini-bead" style="background:#D4632E"></span><span class="mini-bead" style="background:#F08060"></span><span class="mini-bead" style="background:#E8734A"></span><span class="mini-bead" style="background:#D4632E"></span>
+            <span class="mini-bead" style="background:#F08060"></span><span class="mini-bead" style="background:#E8734A"></span><span class="mini-bead" style="background:#D4632E"></span><span class="mini-bead" style="background:#E8734A"></span><span class="mini-bead" style="background:#F08060"></span>
+            <span class="mini-bead" style="background:#E8734A"></span><span class="mini-bead" style="background:#D4632E"></span><span class="mini-bead" style="background:#F08060"></span><span class="mini-bead" style="background:#E8734A"></span><span class="mini-bead" style="background:#D4632E"></span>
+          </div>
+          <div class="mini-label c-l">C</div>
+        </div>
+      </div>
+    </div>
+    <p style="text-align:center;font-size:12px;color:var(--stone);margin-top:-24px;letter-spacing:2px">YOUR DAILY CARRY</p>
+
     <div class="card-grid c3 mt-32">
       <div class="card card-dark">
         <div class="card-label">Nano</div>
