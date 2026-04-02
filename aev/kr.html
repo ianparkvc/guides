@@ -10,7 +10,7 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --canvas:#FFF5F0;--ink:#2D2D3F;--ember:#FF6F61;--slate:#5A5A72;--stone:#9A9AB0;
+  --canvas:#FFF5F0;--ink:#2D2D3F;--ember:#FF6F61;--slate:#3D3D55;--stone:#B8B8CC;
   --white:#fff;--glass:rgba(255,255,255,.08);--glass2:rgba(255,255,255,.14);
   --warm:#FFE8E0;--ink2:#3A3A50;
 }
@@ -20,7 +20,7 @@ body{font-family:'Pretendard Variable','Inter',sans-serif;background:var(--ink);
 ::selection{background:var(--ember);color:var(--canvas)}
 
 /* ===== HERO ===== */
-.hero{min-height:100vh;background:rgba(45,43,61,.88);position:relative;z-index:1;backdrop-filter:blur(40px);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+.hero{min-height:100vh;background:rgba(45,43,61,.88);position:relative;z-index:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
   background-image:radial-gradient(ellipse 1200px 700px at 30% 30%,rgba(167,139,250,.12) 0%,rgba(251,146,160,.1) 20%,rgba(253,186,116,.08) 40%,rgba(147,197,253,.06) 60%,transparent 80%)}
 .hero::before{content:'';position:absolute;inset:0;pointer-events:none}
 .blur-orb{position:fixed;border-radius:50%;filter:blur(80px);opacity:.25;pointer-events:none;z-index:0;animation:orbFloat 15s ease-in-out infinite}
@@ -50,10 +50,10 @@ body{font-family:'Pretendard Variable','Inter',sans-serif;background:var(--ink);
 /* ===== SECTIONS ===== */
 .section{padding:100px 0}
 .section{position:relative;z-index:1}
-.section.dark{background:rgba(45,43,61,.92);color:var(--canvas);backdrop-filter:blur(40px)}
-.section.light{background:rgba(255,248,246,.85);color:var(--ink);backdrop-filter:blur(40px)}
-.section.warm{background:rgba(255,240,235,.85);color:var(--ink);backdrop-filter:blur(40px)}
-.section.ink2{background:rgba(58,55,82,.92);color:var(--canvas);backdrop-filter:blur(40px)}
+.section.dark{background:rgba(45,43,61,.92);color:var(--canvas)}
+.section.light{background:rgba(255,248,246,.85);color:var(--ink)}
+.section.warm{background:rgba(255,240,235,.85);color:var(--ink)}
+.section.ink2{background:rgba(58,55,82,.92);color:var(--canvas)}
 .container{max-width:920px;margin:0 auto;padding:0 32px}
 .container.wide{max-width:1100px}
 
@@ -182,11 +182,6 @@ hr{border:none;border-top:1px solid rgba(255,255,255,.06);margin:48px 0}
 </head>
 <body>
 
-<!-- DREAMY BLUR ORBS -->
-<div class="blur-orb o1"></div>
-<div class="blur-orb o2"></div>
-<div class="blur-orb o3"></div>
-<div class="blur-orb o4"></div>
 
 <!-- HERO -->
 <section class="hero">
